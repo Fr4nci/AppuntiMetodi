@@ -1,0 +1,303 @@
+\RequirePackage{fix-cm}
+\documentclass[12pt, twoside, italian, openany]{book}
+\input{preamble/new_preamble}
+\input{preamble/letterfonts}
+\input{preamble/macros}
+\usepackage{fancyhdr}
+\usepackage{titlesec}  % Opzionale, per controllo avanzato sui titoli
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{fancy}
+
+% Definizione dell'intestazione per pagine dispari (Odd)
+\fancyhead[LO]{\textbf{\thepage}}  % Numero di pagina in grassetto a sinistra
+\fancyhead[RO]{\nouppercase\rightmark}         % Capitolo e sezione a destra
+
+% Definizione dell'intestazione per pagine pari (Even)
+\fancyhead[LE]{\nouppercase\leftmark}          % Capitolo e sezione a sinistra
+\fancyhead[RE]{\textbf{\thepage}}  % Numero di pagina in grassetto a destra
+
+% Cancella il footer
+\fancyfoot{}
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+% Personalizzazione della linea orizzontale
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pgfplotsset{compat=newest}
+\title{Appunti di Complementi di Analisi Matematica 2}
+\author{Francesco Sermi}
+\date{\today}
+\pgfplotsset{
+	compat = newest,
+	colormap/violet % se si vuole cambiare il colormap utilizzato per generare i grafici, tuttavia la copertina ha un colormap a
+					% parte che va modificato qua sotto. Se si stampa non a colori consiglio blackwhite come colormap
+	}
+\renewcommand{\appendixpage}{}
+\begin{document}
+	\begin{titlepage}
+	\centering
+	\vspace*{3cm}
+	{\huge\bfseries Metodi Matematici I \par}
+	\vspace{2cm}
+	{\Large\itshape Francesco Sermi\par}
+	\vfill
+	%\begin{figure}[H]
+	%	\centering
+	%	\includegraphics[scale=0.040]{immagini/burning_ship.png}
+	%\end{figure}
+    	%\begin{tikzpicture}
+	% Definisco lo stile dei vettori
+    	%\tikzset{vector/.style={-stealth, thick, color=black}}
+
+    % Parametri per il punto di contatto
+    	%\def\xo{1}
+    	%\def\yo{2}
+    	%\def\zo{5} % Calcola z0 = f(x0, y0)
+
+    % Derivate parziali della funzione f(x, y) = x^2 + y^2 nel punto (x0, y0)
+    	%\def\fx{2*\xo} % = 2
+    	%\def\fy{2*\yo} % = 4
+
+    % Disegno la superficie
+    	%\begin{axis}[
+    	%    width=12cm,
+    	%    view={60}{30}, % Angolazione impostata
+    	%    axis lines=middle,
+    	%    zlabel={$f(x,y)$},
+    	%    clip=false,
+    	%    domain=-5:5,
+    	%    y domain=-5:5,
+    	%    samples=30,
+    	%    colormap/viridis,
+    	%    z buffer=sort
+    	%]
+
+    % Grafico della superficie con colore visibile
+    	%\addplot3[surf, opacity=0.8, shader=interp]
+    	%    {x^2 - y^2}; % Superficie f(x, y) = x^2 + y^2
+    	%\end{axis}
+	%\end{tikzpicture}
+	\vfill	
+	{\large \hfill Pisa, \today \par}
+	\end{titlepage}
+	\chapter*{Notazioni}
+
+	\pagestyle{plain}
+	\thispagestyle{empty}
+	\pagestyle{fancy}
+
+	Riporto all'inizio del libro le notazioni adottate all'interno di questo documento:
+	\begin{itemize}[label=\hspace{-0.5em}]
+		\item $\mathbb{C}$ campo dei numeri complessi
+		\item $\times$ prodotto cartesiano
+		\item $\text{Span}$ insieme delle combinazioni lineari dei vettori
+		\item $\text{dim}$ dimensione dello spazio vettoriale
+		\item $\text{Ker}$ kernel di un'applicazione lineare
+		\item $\text{Im}$ immagine di un'applicazione lineare
+	\end{itemize}
+	\tableofcontents
+	\chapter{Prima lezione}
+	\pagestyle{plain}
+	\thispagestyle{empty}
+
+	\pagestyle{fancy}
+	Facciamo qualche piccolo richiamo agli spazi vettoriali finiti-dimensionali. E' doveroso riportare la definizione di spazio vettoriale.
+	\begin{definition}[spazio vettoriale]
+		Sia dato un campo $\mathbb{K}$ e un insieme $V$ su cui sono definite due operazioni $+: V \times V \to V$ che soddisfa le proprietà di gruppo abeliano e $\cdot: \mathbb{K} \times V \to V$ che soddisfa le seguenti proprietà:
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $\forall x, y \in V, \forall \alpha \in \mathbb{K}, (x + y) = \alpha x + \alpha y$
+			\item $\forall \alpha, \beta \in \mathbb{K}, \forall x \in V, \alpha (\beta x) = \beta (\alpha x)$.
+		\end{enumerate}
+		Diremo che la tupla $(V, \mathbb{K}, +, \cdot)$ è uno spazio vettoriale.
+	\end{definition}
+	\begin{remark}
+		Dalla proprietà di gruppo abeliano segue che esiste un elemento neutro rispetto all'operazione $+$ e un elemento neutro rispetto all'operazione $\cdot$.
+	\end{remark}
+	\textbf{Notazione}: all'interno di questi appunti, spesso, faremo riferimento a $V$ come spazio vettoriale, sottointendo naturalmente le operazioni $+$ e $\cdot$ definite su di esso. Inoltre, se non specificato, supporremo di lavorare con dei $\mathbb{C}-$spazi vettoriali, ovvero spazi vettoriali definiti sul campo $\mathbb{C}$. \\ \\
+	Iniziamo considerando il più "semplice" degli spazi vettoriali, ovvero $\mathbb{C}^n$: tale spazio vettoriale è costituito dalle $n-$uple di numeri $(\alpha_1, \ldots, \alpha_n)$ con $\forall i \in \{1, \ldots, n \}, \alpha_i \in \mathbb{C}$. Questo può essero uno spazio vettoriale prendendo la $+$ e $\cdot$ definite come
+	\begin{align*}
+	&(\alpha_1, \ldots, \alpha_n) + (\beta_1, \ldots, \beta_n) = (\alpha_1 + \beta_1, \ldots, \alpha_n + \beta_n) \\
+	&\alpha (\alpha_1, \ldots, \alpha_n) = (\alpha \alpha_1, \ldots, \alpha \alpha_n).
+	\end{align*}
+	\begin{definition}[combinazione lineare]
+		Sia $\{ x_1, \ldots, x_n \} \subset V$ un insieme di vettori appartenenti a $V \, \mathbb{K}-$spazio vettoriale. Diremo che
+		$$
+			\alpha_1 x_1 + \ldots + \alpha_n x_n \in V
+		$$
+		è una combinazione lineare dei vettori $x_1, \ldots, x_n \, \forall \alpha_1, \ldots, \alpha_n$. L'insieme di tutte le possibili combinazioni
+		lineari di $x_1, \ldots, x_n$ è detto $\text{Span}(\{ x_1, \ldots, x_n \})$.
+	\end{definition}
+	\begin{prop}
+		$\text{Span}(\{x_1, \ldots, x_n \})$ è un sottospazio vettoriale di $V$.
+	\end{prop}
+	Introduciamo adesso il concetto di vettori linearmente indipendenti
+	\begin{definition}[vettori linearmente indipendenti]
+		Sia $\{ x_1, \ldots, x_n \} \subset V$ un insieme di vettori. Diremo che essi sono linearmente indipendenti se l'equazione
+		$$
+			\alpha_1 x_1 + \ldots + \alpha_n x_n = 0
+		$$
+		ha come unica soluzione quella banale, ovvero $\forall i \in \{ 1, \ldots, n\}, \alpha_i = 0$.
+	\end{definition}
+	\begin{remark}
+		Se l'equazione non ha soluzione banale, allora uno qualunque di quei vettori è in funzione degli altri: infatti, se supponiamo che $\alpha_i \neq 0$ con $i \in \{ 1, \ldots, n \}$ allora
+		\begin{align*}
+		&\alpha_i x_i = - (\alpha_1 x_1 + \ldots + \alpha_{i-1} x_{i-1} + \alpha_{i+1} x_{i+1} + \ldots +\alpha_n x_n) \implies &\\
+		&\implies x_i = -\frac{1}{\alpha_i} (\alpha_1 x_1 + \ldots + \alpha_{i-1} x_{i-1} + \alpha_{i+1} x_{i+1} + \ldots + \alpha_n x_n). & &
+		\end{align*}
+	\end{remark}
+	\begin{definition}[dimensione di uno spazio vettoriale]
+		Sia $V$ uno spazio vettoriale. Diremo che $\text{dim}(V) = n$ è il numero massimo di vettori linearmente indipendenti che si possono trovare in $V$ e diremo che esso è la dimensione dello spazio.
+	\end{definition}
+	Naturalmente dobbiamo distinguere vari casi:
+	\begin{enumerate}[label=\protect\circled{\arabic*}]
+		\item se $\exists$ massimo numero di vettori linearmente indipendenti, allora $\exists n \in \mathbb{N} : \text{dim}(V) = n$;
+		\item se $\not\exists$ massimo numero di vettori linearmente indipendenti, allora $\forall n \in \mathbb{N}, \exists x_1, \ldots, x_n$ vettori linearmente indipendenti. In tal caso diremo che $\text{dim}(V) = \infty$.
+	\end{enumerate}
+	\begin{definition}[base di uno spazio vettoriale]
+		Sia $V$ uno spazio vettoriale. Diremo che un insieme $\{ x_1, \ldots, x_m \} \subset V$ di vettori linearmente indipendenti è una base di $V$ se
+		\begin{equation*}
+		\forall v \in V, \exists \alpha_1, \ldots, \alpha_m \in \mathbb{C} : v = \alpha_1 x_1 + \ldots + \alpha_m x_m. \tag{$\star$}
+		\end{equation*}
+	\end{definition}
+	\begin{remark}
+		Naturalmente la $(\star)$ implica banalmente che $\text{Span}(\{ x_1, \ldots, x_m \}) = V$, ovvero i vettori $x_1, \ldots, x_n$ "generano" tutto lo spazio.
+	\end{remark}
+	Supponendo di aver mostrato che ogni spazio vettoriale ammette una base (che supponiamo già assodato), mostriamo la dimensione dello spazio coincide con il numero di vettori che costituiscono una base.
+	\begin{lemma}[dello scambio]
+		Sia $V$ uno spazio vettoriale e $\mathcal{B} = \{ x_1, \ldots, x_m \}$ un insieme di vettoriali linearmente indipendenti e sia $0 \neq w \in \text{Span}(\mathcal{B})$. Allora sappiamo che $\exists \alpha_1, \ldots, \alpha_m \in \mathbb{K}$ tali che
+		$$
+		w = \alpha_1 x_1 + \ldots + \alpha_m x_m.
+		$$
+		Allora per qualche $i \in \{ 1, \ldots, m \}, \alpha_i \neq 0$, dunque preso $\mathcal{B}' = (\mathcal{B} \setminus \{ x_i \}) \cup \{ w \}$ avremo che
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $\mathcal{B}'$ è un insieme di vettori linearmente indipendenti;
+			\item $\text{Span}(\mathcal{B}') = \text{Span}(\mathcal{B})$.
+		\end{enumerate}
+	\end{lemma}
+	\begin{cor}
+		Se $A = \{ u_1, \ldots, u_k \}$ linearmente indipendente e $B = \{ w_1, \ldots, w_h \}$ linearmente indipendente con $B \subset \text{Span}(A)$ allora $\exists B' \subset A$ con $\# B = \# B' = h$ tale che
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $A' = (A \setminus B') \cup B$ è ancora linearmente indipendente;
+			\item $\text{Span}(A') = \text{Span}(A)$
+		\end{enumerate}
+	\end{cor}
+	\begin{prop}
+		Sia $V$ uno spazio vettoriale. Allora $\text{dim}(V) = n \iff \exists \mathcal{B} = \{ x_1, \ldots, x_n \} \subset V$ base di $V$.
+	\end{prop}
+	\begin{proof} \hspace{1cm} \\
+		$\boxed{\Leftarrow}$: segue banalmente dalla definizione di base. \\
+		$\boxed{\Rightarrow}$: dalla definizione di dimensione, abbiamo chiaramente che $m \leq n$. Supponiamo per assurdo che $m \neq n$, ovvero $m < n$: in tal caso possiamo trovare $\mathcal{C} = \{ x_1, \ldots, x_n \}$ vettori linearmente indipendenti e $\mathcal{B} = \{ y_1, \ldots, y_m \}$ base di V. In
+		tal caso preso $x_i \in \mathcal{C}$ allora 
+		$$
+			\exists \alpha_1, \ldots, \alpha_m \in \mathbb{C} : \alpha_1 x_1 + \ldots + \alpha_m x_m = x_i. 
+		$$
+		Sappiamo che $\exists \alpha_i \neq 0$ per qualche $i \in \{ 1, \ldots, m \}$ (se così non fosse allora $x_i = 0$ e questo contraddice l'ipotesi che i vettori $\{ x_1, \ldots, x_n \}$ siano linearmente indipendenti). Supponiamo, senza perdità di generalità, che $\alpha_i \neq 0$, dunque 
+		$$
+			y_i = -\frac{1}{\alpha_i} (\alpha_1 y_1 + \ldots + \alpha_{i-1} y_{i-1} + \alpha_{i+1} y_{i+1} + \ldots + \alpha_m y_m - x_i).
+		$$
+		Possiamo dunque sostituire a $y_i$ il vettore $x_i$ e, per il lemma precedente, sappiamo che $\{ y_1, \ldots, y_{i-1},$ $x_i, y_{i+1}, \ldots, y_m \}$ è ancora una base di $V$. Ma allora, sostituendo i vettori di $\{ x_1, \ldots, x_m \}$ all'interno della base $\mathcal{B}$, abbiamo un assurdo siccome questo implica che $\forall k > m, \exists \alpha_1, \alpha_2, \ldots, \alpha_m \in \mathbb{C}$ tali che
+		$$
+			x_{k} = \alpha_{1} y_{1} + \ldots + \alpha_{m} y_m.
+		$$
+		il che contraddice l'ipotesi che l'insieme ${x_1, \ldots, x_n}$ sia un insieme linearmente indipendente di vettori.
+	\end{proof}
+	Fissando una base $\mathcal{B} = \{ x_1, \ldots, x_n \}$, possiamo definire un isomorfismo non canonico tra $V$ e $\mathbb{C}^n$.
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[>=stealth, auto]
+
+			% Nodi
+			\node (V) at (0,0) {$V$};
+			\node (Cn) at (3,0) {$\mathbb{C}^n$};
+			\node (X) at (0,-1.5) {$x$};
+			\node (Y) at (3,-1.5) {$(\alpha_1, \ldots, \alpha_n)$};
+	
+			% Frecce biunivoche
+			\draw[<->] (V) -- node[midway, above] {$\varphi$} (Cn);
+			\draw[<->] (X) -- node[midway, above] {} (Y);
+			% Frecce con il simbolo \in ruotato
+			\node at (0,-0.75) {\rotatebox{90}{$\in$}};
+        	\node at (3, -0.75) {\rotatebox{90}{$\in$}};
+			\node at (0, -2) {\rotatebox{90}{$=$}};
+			\node at (0, -2.5) {$\alpha_1 x_1 + \ldots + \alpha_n x_n$};
+		\end{tikzpicture}
+	\end{figure}
+	\begin{prop}
+		Sia $V$ uno spazio vettoriale e sia $\mathcal{B} = \{ v_1, \ldots, v_n \}$ una base di $V$, allora $\varphi: V \mapsto \mathbb{C}^n$ tale che, preso $V \ni x = \alpha_1 v_1 + \ldots + \alpha_n v_n$, $x \stackrel{\varphi}{\mapsto} (\alpha_1, \ldots, \alpha_n)$ 
+	\end{prop}
+	\begin{proof}
+		Dalle formule della dimensione di un'applicazione lineare (che verranno dimostrate più avanti) segue banalmente che $\text{dim}(V) = \text{dim}(\text{Im})(\varphi)$ siccome $\text{Ker}(\varphi) = \{ 0 \}$ chiaramente.
+	\end{proof}
+	\begin{definition}[applicazione lineare]
+		Siano $V, W$ spazi vettoriali sul medesimo campo $\mathbb{K}$. Allora diremo che $A: V \to W$ è un'applicazione lineare se
+		$$
+		A(\alpha_1 v_1 + \alpha_2 v_2) = \alpha_1 A(v_1) + \alpha_2 A(v_2) \forall \alpha_1, \alpha_2 \in \mathbb{K}, \forall v_1, v_2 \in \mathbb{V}
+		$$
+	\end{definition}
+	\begin{remark}
+		Per ogni applicazione lineare $A0 = 0$. Ciò segue dal fatto che $A(0) = A(0) + A(0) \implies A(0) = 0$.
+	\end{remark}
+	Nel caso finito-dimensionale non abbiamo "problemi" nel dominio di $A$, siccome essa è lineare su tutto $A$: nel caso infinito-dimensionale saremo costretti a restringerci a dei sottospazi. \\
+	Ora andiamo naturalmente a dare nuovamente la definizione del kernel e dell'immagine di un'applicazione lineare
+	\begin{definition}[kernel]
+		Siano $V, W$ due spazi vettoriali sul medesimo campo e sia $A: V \to W$ un'applicazione lineare. Allora definiamo il kernel di $A$ come
+		$$
+		\text{Ker}(A) = \{ x \in V : A(x) = 0 \} \subset V.
+		$$
+	\end{definition}
+	\begin{definition}[immagine]
+		Siano $V, W$ due spazi vettoriali sul medesimo campo e sia $A: V \to W$ un'applicazione lineare. Allora definiamo l'immagine di $A$ come
+		$$
+		\text{Im}(A) = \{ y \in W | \exists x \in V : A(x) = y \} \subset W.
+		$$
+	\end{definition}
+	\begin{prop}
+		$\text{Ker}(A)$ e $\text{Im}(A)$ è un sottospazio vettoriale.
+	\end{prop}
+	\begin{definition}[applicazione suriettiva]
+		Siano $V, W$ due spazi vettoriali sul medesimo campo $\mathbb{K}$. Allora $A$ è surriettivo $\iff \text{Im}(A) = W$.
+	\end{definition}
+	\begin{prop}
+		Siano $V, W$ due spazi vettoriali sul medesimo campo $\mathbb{K}$. Allora $A$ è iniettivo $\iff \text{Ker}(A) = \{ 0 \}$.
+	\end{prop}
+	\begin{proof} \hspace{1cm} \\
+		$\boxed{\Rightarrow}$: se $A$ è iniettivo chiaramente segue che $\text{Ker}(A) = \{ 0 \}$. \\
+		$\boxed{\Leftarrow}$: se $\text{Ker}(A) = \{ 0 \}$ allora avremo che se per assurdo $\exists v, w \in V : A(v) = A(w)$ con $v \neq w$ allora $A(v - w) = 0 \implies v - w \in \text{Ker}(A) \implies v = w$.
+	\end{proof}
+	\begin{theorem}[della dimensione]
+		Siano $V, W$ due campi vettoriali sul medesimo campo e sia $A: V \to W$ un'applicazione lineare. Allora avremo che
+		$$
+		\text{dim}(V) = \text{dim}(\text{Ker}(A)) + \text{dim}(\text{Im}(A)).
+		$$
+	\end{theorem}
+	\begin{remark}
+		Se $A: V \to V$ allora è facile vedere che se $\text{dim}(\text{Ker})(A) = 0 \iff \text{Ker}(A) = \{ 0 \} \iff A$ è iniettiva, allora $\text{dim}(V) = \text{Im}(V)$, ovvero $A$ è suriettivo.
+	\end{remark}
+	\begin{proof}
+		Sappiamo che $\text{Ker}(A)$ è un sottospazio vettoriale. Supponiamo allora che $B = \{ v_1, \ldots, v_r \}$ sia una base di tale sottospazio, allora sappiamo che è possibile completare tale base di $\text{Ker}(A)$ ad una base di $V$.
+		Sia allora $B' = \{ v_1, \ldots, v_r, v_{r+1}, \ldots, v_n \}$ una base di $V$: per mostrare la tesi è sufficiente mostrare che i vettori $f(v_{r+1}), \ldots f(v_n)$ generano l'immagine di $A$. Sappiamo, per definizione, che la base dell'immagine
+		di $f$ è data da $\{ f(v_1), \ldots, f(v_{n}) \}$ ma sappiamo che i vettori $f(v_1), \ldots, f(v_r)$ sono nulli, quindi l'immagine è generata dai vettori $f(v_{r+1}), \ldots, f(v_n)$. Verifichiamo adesso che l'immagine di $A$ ha dimensione $n-r$, permettendoci di concludere: per fare ciò osserviamo
+		che l'equazione
+		\begin{align*}
+		&\alpha_{r+1} f(v_{r+1}) + \ldots \alpha_{n} f(v_n) = 0 \implies f(\alpha_{r+1} v_{r+1} + \ldots + \alpha_n v_n) = 0 \implies \\
+		&\implies \alpha_{r+1} v_{r+1} + \ldots + \alpha_n v_n \in \text{Ker}(A).
+		\end{align*}
+		Ma allora questo implica che quest'ultimo vettore è una combinazione lineare dei vettori $v_1, \ldots, v_r$ che formano una base di $\text{Ker}(A)$, dunque
+		$$
+		\alpha_{r+1} v_{r+1} + \ldots + \alpha_n v_n = \alpha_1 v_1 + \ldots + \alpha_r v_r \implies -\alpha_1 v_1 - \ldots - \alpha_r v_r + \alpha_{r+1} v_{r+1} + \ldots + \alpha_n v_n = 0.
+		$$
+		Essendo i vettori $v_1, \ldots, v_n$ linearmente indipendenti, si conclude che $\forall i \in \{ 1, \ldots, n \}, \alpha_i = 0$ dunque $f(v_{r+1}),\ldots, f(v_{n})$ sono linearmente indipendenti, permettendoci dunque di affermare che $\text{dim}(\text{Im})(A) = n-r \implies \text{dim}(\text{Im})(A) + \text{dim}(\text{Ker})(A) = n - r + r = n = \text{dim}{V}$
+	\end{proof}
+
+
+	\chapter{Seconda lezione}
+	\thispagestyle{empty}
+	
+	La scorsa lezione siamo arrivati alla formula della dimensione. Ora, come fatto prima, vogliamo vedere se è possibile studiare l'azione di un'applicazione lineare fra $V$ e $W$ di dimensione, rispettivamente, $\text{dim}(V) = n$ e $\text{dim}(W) = m$ tramite gli isomorfismi fra $V \longleftrightarrow \mathbb{C}^n$ e $W \longleftrightarrow \mathbb{C}^m$.
+
+	%\addcontentsline{toc}{chapter}{Bibliografia}
+	%\bibliographystyle{unsrt}
+	%\bibliography{bibliography.bib}
+\end{document}

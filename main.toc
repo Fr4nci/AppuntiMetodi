@@ -1,0 +1,4 @@
+\babel@toc {italian}{}\relax 
+\babel@toc {italian}{}\relax 
+\contentsline {chapter}{\numberline {1}Prima lezione}{4}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Seconda lezione}{8}{chapter.2}%
