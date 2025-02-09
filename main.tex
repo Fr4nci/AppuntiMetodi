@@ -1,6 +1,7 @@
 \RequirePackage{fix-cm}
 \documentclass[12pt, twoside, italian, openany]{book}
 \input{preamble/new_preamble}
+\usepackage{subcaption}
 \input{preamble/letterfonts}
 \input{preamble/macros}
 \usepackage{fancyhdr}
@@ -183,12 +184,11 @@
 			\item $\text{Span}(A') = \text{Span}(A)$
 		\end{enumerate}
 	\end{cor}
-	\begin{prop}
-		Sia $V$ uno spazio vettoriale. Allora $\text{dim}(V) = n \iff \exists \mathcal{B} = \{ x_1, \ldots, x_n \} \subset V$ base di $V$.
-	\end{prop}
-	\begin{proof} \hspace{1cm} \\
-		$\boxed{\Leftarrow}$: segue banalmente dalla definizione di base. \\
-		$\boxed{\Rightarrow}$: dalla definizione di dimensione, abbiamo chiaramente che $m \leq n$. Supponiamo per assurdo che $m \neq n$, ovvero $m < n$: in tal caso possiamo trovare $\mathcal{C} = \{ x_1, \ldots, x_n \}$ vettori linearmente indipendenti e $\mathcal{B} = \{ y_1, \ldots, y_m \}$ base di V. In
+	\begin{theorem}
+		Sia $V$ uno spazio vettoriale tale che $\text{dim}(V) = n$ e sia $\mathcal{B} = \{ x_1, \ldots, x_m \} \subset V$ una base di $V$. Allora $m = n$.
+	\end{theorem}
+	\begin{proof} 
+		dalla definizione di dimensione, abbiamo chiaramente che $m \leq n$. Supponiamo per assurdo che $m \neq n$, ovvero $m < n$: in tal caso possiamo trovare $\mathcal{C} = \{ x_1, \ldots, x_n \}$ vettori linearmente indipendenti e $\mathcal{B} = \{ y_1, \ldots, y_m \}$ base di V. In
 		tal caso preso $x_i \in \mathcal{C}$ allora 
 		$$
 			\exists \alpha_1, \ldots, \alpha_m \in \mathbb{C} : \alpha_1 x_1 + \ldots + \alpha_m x_m = x_i. 
@@ -221,11 +221,12 @@
 			\node at (0,-0.75) {\rotatebox{90}{$\in$}};
         	\node at (3, -0.75) {\rotatebox{90}{$\in$}};
 			\node at (0, -2) {\rotatebox{90}{$=$}};
-			\node at (0, -2.5) {$\alpha_1 x_1 + \ldots + \alpha_n x_n$};
+			\node at (0, -2.5) {\scriptsize $\alpha_1 x_1 + \ldots + \alpha_n x_n$};
 		\end{tikzpicture}
+		\caption{Diagramma commutativo tra $V$ e $\mathbb{C}^n$: fissando una base, è possibile studiare un qualunque spazio vettoriale supponendo di trovarci in $\mathbb{C}^n$.}
 	\end{figure}
 	\begin{prop}
-		Sia $V$ uno spazio vettoriale e sia $\mathcal{B} = \{ v_1, \ldots, v_n \}$ una base di $V$, allora $\varphi: V \mapsto \mathbb{C}^n$ tale che, preso $V \ni x = \alpha_1 v_1 + \ldots + \alpha_n v_n$, $x \stackrel{\varphi}{\mapsto} (\alpha_1, \ldots, \alpha_n)$ 
+		Sia $V$ uno spazio vettoriale e sia $\mathcal{B} = \{ v_1, \ldots, v_n \}$ una base di $V$, allora possiamo definire $\varphi: V \mapsto \mathbb{C}^n$ tale che, preso $V \ni x = \alpha_1 v_1 + \ldots + \alpha_n v_n$, $x \stackrel{\varphi}{\mapsto} (\alpha_1, \ldots, \alpha_n)$ 
 	\end{prop}
 	\begin{proof}
 		Dalle formule della dimensione di un'applicazione lineare (che verranno dimostrate più avanti) segue banalmente che $\text{dim}(V) = \text{dim}(\text{Im})(\varphi)$ siccome $\text{Ker}(\varphi) = \{ 0 \}$ chiaramente.
@@ -237,7 +238,7 @@
 		$$
 	\end{definition}
 	\begin{remark}
-		Per ogni applicazione lineare $A0 = 0$. Ciò segue dal fatto che $A(0) = A(0) + A(0) \implies A(0) = 0$.
+		Per ogni applicazione lineare $A(0) = 0$. Ciò segue dal fatto che $A(0) = A(0) + A(0) \implies A(0) = 0$.
 	\end{remark}
 	Nel caso finito-dimensionale non abbiamo "problemi" nel dominio di $A$, siccome essa è lineare su tutto $A$: nel caso infinito-dimensionale saremo costretti a restringerci a dei sottospazi. \\
 	Ora andiamo naturalmente a dare nuovamente la definizione del kernel e dell'immagine di un'applicazione lineare
@@ -296,6 +297,279 @@
 	\thispagestyle{empty}
 	
 	La scorsa lezione siamo arrivati alla formula della dimensione. Ora, come fatto prima, vogliamo vedere se è possibile studiare l'azione di un'applicazione lineare fra $V$ e $W$ di dimensione, rispettivamente, $\text{dim}(V) = n$ e $\text{dim}(W) = m$ tramite gli isomorfismi fra $V \longleftrightarrow \mathbb{C}^n$ e $W \longleftrightarrow \mathbb{C}^m$.
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[baseline, >=stealth, auto]
+			% Nodi
+			\def\trasl{+3}
+			\node (V) at (0-\trasl,0) {$V$};
+			\node (W) at (3-\trasl,0) {$W$};
+			\node (Cn) at (0-\trasl,-1.5) {$\mathbb{C}^n$};
+			\node (Cm) at (3-\trasl,-1.5) {$\mathbb{C}^m$};
+	
+			\node (x) at (-1.40-\trasl, 0) {$x$};
+			\node (in) at (-0.50-\trasl, 0) {$\in$};
+			\node (x_coord) at (-1.40-\trasl, -1.5) {\scriptsize $(\alpha_1, \ldots, \alpha_n)$};
+			\node (x_coord_in) at (-0.50-\trasl, -1.5) {$\in$};
+			\node (y) at (4.40-\trasl, 0) {$y$};
+			\node (y_in) at (3.50-\trasl, 0) {$\ni$};
+			\node (y_coord_in) at (3.50-\trasl, -1.5) {$\ni$};
+			\node (y_coord) at (4.40-\trasl, -1.5) {\scriptsize $(\mu_1, \ldots, \mu_m)$};
+			% Frecce biunivoche
+			\draw[<->] (V) -- node[midway, right] {$\varphi_n$} (Cn);
+			\draw[<->] (W) -- node[midway, left] {$\varphi_m$} (Cm);
+			\draw[->] (V) -- node[midway, above] {$A$} (W);
+			\draw[<->] (x) -- node[midway, above] {} (x_coord);
+			\draw[<->] (y) -- node[midway, right] {} (y_coord);
+			\draw[->] (Cn) -- node[midway, above] {$[A]$} (Cm);
+			% Frecce con il simbolo \in ruotato
+			\node (A) at (5, -0.75) {dove $[A] = \left. \smash[b]{\underbrace{\big( a_{ij} \big)}_{\textstyle\text{$n$ colonne}}}\,\right\}\text{$m$ righe}$};
+		\end{tikzpicture}
+		\caption{Diagramma non commutativo fra $V$, $W$ e gli spazi vettoriali ad esso isomorfi $\mathbb{C}^n$ e $\mathbb{C}^m$: possiamo studiare l'azione di un'applicazione lineare $A$ tramite la matrice associata $[A]$.}
+	\end{figure}
+	Ricordiamo che un'applicazione lineare è caratterizzata completamente dalla conoscenza dei $w_i = A(v_i)$ nelle coordinate della base $\mathcal{B}'$ di $W$: infatti posto $A(e_i) = \sum\limits_{j=1}^m a_{ji}f_j$ (siccome la matrice associata altro non è che la matrice che ha, nelle colonne, le coordinate del nuovo vettore ottenuto applicandoci $A$ si ottiene leggendo la colonna $i-$esima e "scorrendo" lungo le righe) allora avremo che, preso $x \in V$, possiamo concludere che
+	$$
+	x = \sum_{i=1}^n \alpha_i e_i \implies A(x) = \sum_{i=1}^n \alpha_i A(e_i) = \sum_{i=1}^n \alpha_i \sum_{j=1}^m a_{ji} f_j = \sum_{j=1}^m f_j \sum_{i=1}^n a_{ji} \alpha_i = \sum_{j=1}^m \mu_j f_j
+	$$
+	dove abbiamo posto $\mu_i = \sum\limits_{j=1}^m a_{ji} \alpha_i$. \\
+	Un'altra cosa molto importante che accade a dimensione finita è il fatto che lo spazio delle applicazioni da uno spazio vettoriale $V$ ad uno spazio vettoriale $W$ è uno spazio vettoriale: possiamo anche facilmente mostrare, sempre tramite l'isomorfismo fra $V \longleftrightarrow \mathbb{C}^n$ e $W \longleftrightarrow \mathbb{C}^m$, che
+	le dimensioni di tale spazio è proprio pari al prodotto della dimensione dei due spazi, ovvero $\text{dim}(V)\text{dim}(W)$. \\
+	\begin{definition}[spazio delle applicazioni lineari fra $V$ e $W$]
+		Siano $V$ e $W$ due spazi vettoriali a dimensione finita. Indicheremo con $\mathcal{L}(V, W)$ lo spazio delle applicazioni lineari da $V$ a $W$. Se consideriamo lo spazio degli operatori di $V$ (ovvero le applicazioni lineari da $V$ a $V$) lo indicheremo con $\mathcal{L}(V)$.
+	\end{definition}
+	Consideriamo la restrizione al sottospazio degli operatori invertibili in $V$: allora sappiamo che $\exists A^{-1} \in \mathcal{L}(V): A \circ A^{-1} = A \circ A^{-1} = \text{Id}$ dove $\circ: \mathcal{L}(V) \times \mathcal{L}(V) \to \mathcal{L}(V)$ è l'operazione di composizione fra operatori,
+	che spesso indicheremo con "prodotto" per comodità (infatti, la composizione di due applicazioni lineari corrisponde al prodotto fra le due matrici associate, facendo attenzione all'ordine).
+	\begin{definition}[algebra degli operatori]
+		Sia $V$ uno spazio vettoriale a dimensione finita, allora le operazioni $+: \mathcal{L}(V) \times \mathcal{L}(V) \to \mathcal{L}(V)$ e $\circ: \mathcal{L}(V) \times \mathcal{L}(V) \to \mathcal{L}(V)$ formano un'\emph{algebra} su $\mathcal{L}(V)$.
+	\end{definition}
+
+	\section{Norma}
+	Per schiarire le idee, iniziamo con un'esempio di norma: pensando $C = \mathbb{C}$ come spazio vettoriale di dimensione $1$, allora sappiamo che ad ogni $z \in C$ è possibile definire
+	\begin{align*}
+		&|| \, z \, || = | z | = \sqrt{z^* z} = \sqrt{x^2 + y^2} & &\text{dove } z = x+iy \text{ con } x, y \in \mathbb{R},
+	\end{align*}
+	dove $||\cdot||$ è chiamata, in $\mathbb{C}$, modulo. \\
+	La nozione di \emph{norma}, dunque, altro non è che la generalizzazione della nozione di modulo e, dunque, del concetto di lunghezza ad ogni spazio vettoriale. \\
+	Ora può risultare più semplice capire la definizione formale
+	\begin{definition}[norma]
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale (di dimensione finita o infinita). Chiamiamo norma un'applicazione $||\cdot||: V \to \mathbb{R}^{\geq 0}$ tale che $x \stackrel{||\cdot||}{\mapsto} ||x|| \in \mathbb{R}^{\geq 0}$ che soddisfa le seguenti proprietà
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $||x|| \geq 0, ||x|| = 0 \iff x = 0$;
+			\item $||\alpha x || = |\alpha| \, ||x|| \, \, \forall \alpha \in \mathbb{C}, \forall v \in V$;
+			\item (disuguaglianza triangolare) $||x+y|| \leq ||x|| + ||y|| \, \, \forall x, y \in V$.
+		\end{enumerate}
+		Diremo che la coppia $(V, ||\cdot||)$ è uno spazio normato. 
+	\end{definition}
+	Innanzitutto vediamo che, dalla $\circled{2}$, siamo in grado di mostrare che la norma è fissata a meno di una costante: infatti, preso un vettore $0 \neq e_1 \in V$, abbiamo che
+	$$
+		x \in V \implies x = \alpha e_1 \implies ||x|| = ||\alpha e_1|| \stackrel{\circled{2}}{=} |\alpha| \, || e_1 || \in \mathbb{R}^{\geq 0}.
+	$$
+	Già con $\text{dim}(V)=2$ esistono una moltitudine di norme diverse. Un esempio sono sicuramente
+	\begin{itemize}
+		\item $||z||_{\infty} = \max\limits_{i=1,2} |\alpha_{i}|$;
+		\item $||z||_1 = |\alpha_1| + |\alpha_2|$.
+	\end{itemize}
+	dove abbiamo fissato una base di $V \, \{e_1, e_2 \}$ e $\alpha_1 e_1 + \alpha_2 e_2 = x \in V \iff z = \varphi(x) = (\alpha_1, \alpha_2) \in \mathbb{C}^2, $ovvero abbiamo considerato l'isomorfismo fra $V \longleftrightarrow \mathbb{C}^2$. \\
+	In generale, esistono delle struttura che sono ancora più generali degli spazi normati, ovvero gli spazi metrici, ovvero degli insiemi in cui è possibile definire una funzione, detta \emph{distanza}, che quantifica la distanza fra gli elementi (non è detto però che essa rappresenti una "lunghezza" nel senso comune)
+	\begin{definition}[spazio metrico]
+		Sia $V$ un insieme su cui è definita una funzione detta \emph{distanza} $d: V \times V \to \mathbb{R}^{\geq 0}$ tale che:
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $d(x, y) = 0 \iff x = y \, \, \forall x, y \in V$;
+			\item $d(x, y) = d(y,x) \, \, \forall x, y \in V$;
+			\item (disuguaglianza triangolare) $\forall v, w, z \in V, d(v, z) \leq d(v,w)+d(w, z)$.
+		\end{enumerate}
+	\end{definition} 
+	\begin{remark}
+		Possiamo munire un insieme sempre della cosiddetta \emph{distanza discreta}, definita come
+		$$
+		d(x, y) = \begin{cases}
+			1 & \text{se } x \neq y \\
+			0 & \text{se } x = y
+		\end{cases}
+		$$
+		e verificare che essa possiede tutte le proprietà richiesta dalla definizione
+	\end{remark}
+	\begin{prop}
+		Sia $(V, ||\cdot||)$ uno spazio normato. Allora $d(\cdot_1, \cdot_2) = ||\cdot_2 - \cdot_1||$ è una distanza
+	\end{prop}
+	\begin{proof}
+		La dimostrazione verte nel dimostrare che la distanza definita sopra soddisfa tutte le proprietà richieste: notiamo che
+		$$
+		d(x, y) = ||y-x|| = 0 \iff y - x = 0 \implies x = y
+		$$
+		dove si è usato la proprietà $\circled{1}$ della norma. Successivamente osserviamo che
+		$$
+		||x-y|| = ||(-1)(y-x)|| = |-1| \, ||y-x|| = ||y-x|| \implies d(x, y) = d(y, x) \, \, \forall x, y \in V.
+		$$
+		Infine presi $x, y, z \in V$
+		$$
+			d(x, z) = ||x-z|| = ||x-y+y-z|| \leq d(x, y) + d(y, z)
+		$$
+		dove si è usato la proprietà $\circled{3}$ della norma (disuguaglianza triangolare).
+	\end{proof}
+	Possiamo introddure ancora un'altra struttura, ovvero quella dello spazio vettoriale munito di prodotto scalare definito positivo. \textbf{Nota bene}: nel nostro caso
+	andremo a dare una definizione "leggermente" diversa di prodotto scalare, siccome richiediamo che esso sia definito positivo, ovvero che $\forall v \in V, (v, v) > 0$. La definizione più generale di prodotto
+	scalare non richiede ciò, tuttavia, siccome siamo interessati non solo ad avere un prodotto scalare ma siamo interessati anche alla norma indotta dal prodotto scalare, segue necessariamente che gli unici prodotti scalari "utili"
+	siano proprio quelli definiti positivi (o quelli definiti negativi, con qualche piccolo cambiamento di segno) siccome sono quelli per cui la norma può avere un senso geometrico.
+	\begin{definition}[prodotto scalare]
+		Sia $V$ uno spazio vettoriale sul campo $\mathbb{C}$, allora chiamiamo prodotto scalare un'applicazione $(\cdot, \cdot): V \times V \to \mathbb{C}$ che possiede le seguenti proprietà:
+			\begin{enumerate}[label=\protect\circled{\arabic*}]
+				\item $\forall x \in V, (x, x) \in \mathbb{R}^{\geq 0}, (x, x) = 0 \iff x = 0$;
+				\item $\forall x, y \in V, (x, y) = (y,x)^*$;
+				\item $\forall x,y \in V, \forall \alpha \in \mathbb{C}, (x, \alpha y) = \alpha(x, y)$;
+				\item $\forall x, y, z \in V, (x, y+z) = (x, y) + (x, z)$.
+			\end{enumerate}
+	\end{definition}
+	\begin{remark}
+		Imporre che $(x, x) \in \mathbb{R}$ è ridondante, siccome dalla \circled{2} abbiamo che $(x, x) = (x, x)^{*} \implies (x, x) \in \mathbb{R}^{\geq 0}$.
+	\end{remark}
+	\begin{remark}
+		Osserviamo che $(\cdot, \cdot)$ è lineare in entrambi le componenti rispetto a $+: V \times V \to V$: infatti presi $x, y, z \in V$ avremo che $(x + y, z) = (z, x+y)^* = ((z, x) + (z, y))^* = (z, x)^* + (z, y)^*=(x, z) + (y, z)$.
+	\end{remark}
+	Presi $z, w \in \mathbb{C}^n$ con $z = (z_1, \ldots, z_n)$ e $w = (w_1, \ldots, w_n)$ possiamo introdurre il seguente prodotto scalare
+	$$
+		(z, w) = \sum_{i=1}^n z_i^* w_i
+	$$
+	e possiamo facilmente mostrare che presenta tutte le buone proprietà richieste dalla definizione di prodotto scalare, siccome
+	\begin{enumerate}[label=\protect\circled{\arabic*}]
+		\item $(z, z) = \sum\limits_{i=1}^n z_i^* z_i = \sum\limits_{i=1}^n |z_i|^2 \geq 0$ e $(z, z) = 0 \iff \sum\limits_{i=1}^n |z_i|^2 = 0 \iff z=0$;
+		\item $(z, w) = \sum\limits_{i=1}^n z_i^* w_i = \sum\limits_{i=1}^n (w_i^* z_i)^* = (\sum\limits_{i=1}^n w_i^* z_i)^* = (w, z)^*$ dove si è usato il fatto che $\forall n \in \mathbb{N}, \forall z_1, \ldots, z_n \in \mathbb{C}, (z_1 + \ldots + z_n)^* = z_1^* + \ldots + z_n^*$;
+		\item $(z, w_1 + w_2) = \sum\limits_{i=1}^n z_i^* (w_1 + w_2)_i = \sum\limits_{i=1}^n z_i^* w_{{1}_i} + \sum\limits_{i=1}^n z_i^* w_{{2}_i} = (z, w_1) + (z, w_2)$;
+		\item $(z, \alpha w) = \sum\limits_{i=1}^n z_i^* (\alpha w)_i = \alpha \sum\limits_{i=1}^n z_i^* w_i = \alpha (z, w)$.
+ 	\end{enumerate}
+
+	\chapter{Terza lezione}
+
+	Per adesso fissiamo $V = \mathbb{C}^n$. Consideriamo $z = (z_1, \ldots, z_n)$ tale che $\forall i, z_i \in \mathbb{C}$ e consideriamo il prodotto scalare definito alla fine della scorsa lezione
+	$$
+	(z, w) = \sum_{i=1}^n z_i^* w_i.
+	$$
+	Vogliamo adesso mostrare che $||\cdot|| = \sqrt{(\cdot, \cdot)}$ è una norma. Prima di procedere, tuttavia, è sicuramente conveniente stabilire dei nomi per le norme precedentemente individuate:
+	\begin{enumerate}[label=\protect\circled{\arabic*}]
+		\item $||z||_{\infty} = \max\limits_{i} |z_i|$ viene detta \textbf{norma infinito} (o norma del max);
+		\item $||z||_{2} = \sqrt{\sum\limits_{i=1}^n |z_i|^2}$ viene detta norma standard;
+		\item $||z||_{1} = \sqrt{\sum\limits_{i=1}^n |z_i|}$
+	\end{enumerate}
+	Mostriamo che $||z||_2 = \sqrt{(z, z)}$ è una norma: per fare ciò abbiamo bisogno di mostrare la seguente disuguaglianza
+	\begin{prop}[disuguaglianza di Schwarz]
+		$$
+		\forall z, w \in \mathbb{C}^n, |(z, w)| \leq || z || \, || w ||
+		$$
+	\end{prop}
+	\begin{proof}
+		Osserviamo che presi $z, w \in \mathbb{C}$ abbiamo che $(||w||^2 z - (w, z) w, ||w||^2 z - (w, z) w) \geq 0$, pertanto si deve avere che
+		\begin{align*}
+		&\sum_{i=1}^n |||w||^2 z_i - (w, z)w_i|^2 \geq 0 \iff \sum_{i=1}^n (||w||^2 z_i - (w, z)w_i)^* (||w||^2z_i - (w, z)w_i) \geq 0 \iff \\
+		&\sum_{i=1}^n (||w||^4 |z_i|^2 - ||w||^2 z_i^* w_i (w, z) - ||w||^2 (w, z)^* w_i^* z_i + (w, z)^* (w, z) |w_i|^2) \geq 0 \iff \\
+		&\sum_{i=1}^n ||w||^4 |z_i|^2 - \sum_{i=1}^n ||w||^2 z_i^* w_i (w, z) - \sum_{i=1}^n ||w||^2 w_i^* z_i (w, z)^* + \sum_{i=1}^n (w,z)^* (w, z) |w_i|^2 \geq 0 \iff \\
+		&||w||^4 ||z||^2 - ||w||^2 (z, w) (w, z) - \cancel{||w||^2 (w, z) (w, z)^*} + \cancel{||w||^2 (w, z)^* (w, z)} \geq 0 \iff \\
+		&||w||^2 ( || w ||^2 || z ||^2 - (w, z)^* (w, z)) \geq 0 \iff ||w||^2 ||z||^2 - |(w, z)|^2 \geq 0 \implies \\
+		&\implies |(w, z)| \leq ||z|| \, ||w||,
+		\end{align*}
+		dove abbiamo potuto eseguire la radice senza problemi perché entrambi sono dei numeri maggiori o uguali a $0$.
+	\end{proof}
+	\begin{prop}
+		$||\cdot||_2$ è una norma
+	\end{prop}
+	\begin{proof}
+		La dimostrazione verte chiaramente nel mostrare che $||\cdot||_2$ soddisfa le proprietà richieste dalla definizione di norma. \\
+		Per mostrare la \circled{1} abbiamo chiaramente che $||z||_2 = \sqrt{\sum_{i}^n |z_i|^2} = 0 \iff z_i = 0 \, \, \forall i$. Per quanto riguarda la \circled{2} abbiamo che $||\alpha z||_2 = |\alpha| \, ||z||$, infatti $||\alpha z|| = \sqrt{(\alpha z, \alpha z)} = \sqrt{\alpha^* \alpha (z, z)} = |\alpha| \sqrt{(z, z)} = |\alpha| \, ||z||$. \\
+		Infine, per mostrare la \circled{3}, si ha che $||z + w||^2 = (z + w, z+ w) = (z, z) + (z, w) + (w, z) + (w, w) = ||z||^2 + ||w||^2 + (z, w) + (z, w)^* = ||z||^2 + ||w||^2 + 2\text{Re}((z, w))$ ma osserviamo che $\text{Re}((z, w)) \leq |(z,w)| \leq ||z|| \, ||w||$ per la disuguaglianza di Schwarz: questo ci permette di concludere, siccome $||z + w||^2 = ||z||^2 + 2\text{Re}((z,w)) +  ||w||^2 \leq ||z||^2 + 2||v|| \, ||w||^2 + ||w||^2 = (||v|| + ||w||)^2 \implies ||z+w|| \leq ||z|| + ||w||$ dove abbiamo potuto prendere la radice senza problemi siccome $||\cdot||$ è sempre positiva.
+	\end{proof}
+	\begin{definition}[vettori ortogonali]
+		Sia $V$ uno spazio vettoriale sul campo $\mathbb{C}$ munito di un prodotto scalare. Sia $\text{dim}(V) = n < \infty$, allora $z, w \in V$ si dicono \emph{ortogonali} se $(z,w) = 0$. 
+	\end{definition}
+	\begin{definition}[base ortogonale]
+		Sia $V$ uno spazio vettoriale sul campo $\mathbb{C}$ munito di prodotto scalare $(\cdot, \cdot)$ con $\text{dim}(V) = n$. Diremo che $\{ e_i \}_{i\in \{1, \ldots n \}} \subset V$ è una base ortogonale di $V$ se $\{ e_i \}_{i \in \{1, \ldots, n \}}$ è una base di $V$ e se $(e_i, e_j) = \delta_{ij} \, \, \forall i \neq j \in \{ 1, \ldots, n\}$.
+	\end{definition}
+	\begin{remark}
+		Il teorema di Lagrange ci assicura sempre di poter trovare una base ortogonale. Il teorema di Sylvester ci assicura, invece, di poter trovare una base ortonormale.
+	\end{remark}
+	Possiamo sempre ortogonalizzare una base tramite il procedimento di Grand-Schmidt: sia $\{v_i \}_{i \in \{ 1, \ldots, n \}}$ una base di $V$, allora posto $e_1 = \frac{v_1}{||v_1||}$ dobbiamo togliere a $v_2$ la componente "parallela" a $e_1$ affinché siano ortogonali, pertanto poniamo $e_2 = \frac{v_2 - (e_1, v_2) e_1}{||v_2 - (e_1, v_2)e_1||}$ e possiamo vedere che
+	$$
+	(e_1, e_2) = (e_1, \frac{v_2}{||v_2 - (e_1, v_2) e_1||}) - (e_1, e_2)(e_1, \frac{e_1}{||v_2 - (e_1, v_2)e_1||}) = 0.
+	$$
+	Possiamo ripetere il medesimo procedimento per tutti gli altri vettori: prendendo $v_3$ dobbiamo togliergli la componente parallela sia a $e_1$ che a $e_2$; per $v_4$ la componente parallela a $e_1$, $e_2$ e $e_3$ e così via. Procedendo per induzione, abbiamo che l'$i-$esimo vettore è ortogonalizzato da
+	$$
+		e_i = \frac{v_i - \sum\limits_{j=1}^{i-1} (v_2, e_j) e_j}{|| v_i - \sum\limits_{j=1}^{i-1} (v_2, e_j) e_j ||}
+	$$
+	Presa $\mathcal{B} = \{ e_i \}$ una base ortonormale possiamo sempre considerare il solito isomorfismo fra $V \longleftrightarrow \mathbb{C}$ avremo che
+	$$
+	(z, w) = (\sum_{i=1}^n z_i e_i , \sum_{j=1}^n w_j e_j) = \sum_{i=1}^n \sum_{j=1}^n z_i^* w_j (e_i, e_j) = \sum_{i=1}^n \sum_{j=1}^n z_i^* w_j \delta_{ij} = \sum_{i=1}^n z_i^* w_i.
+	$$
+	\begin{remark}
+		Possiamo capire, dalla forma in cui si presenta in base ortonormale il prodotto scalare, che il prototipo perfetto di prodotto scalare è quello usuale che avevamo definito in $\mathbb{C}^n$ in base canonica e, possibilmente, vorremmo ricondurci sempre trovando sempre una base ortonormale.
+	\end{remark}
+	Inoltre, in una base ortonormale $\{ e_1, \ldots, e_n \}$, è possibile ricavare le coordinate di un vettore in maniera abbastanza agevole: infatti, sfruttando l'ortogonalità fra i vettori della base, si vede che, preso $z \in V$ con coordinate (rispetto alla base ortogonale) $(z_1, \ldots, z_n)$, allora
+	$$
+		(e_i, z) = (e_i, \sum_{j=1}^n z_j e_j) = \sum_{i=1}^n z_i (e_i, e_j) = \sum_{i=1}^n z_i \delta_{ij} = z_i.
+	$$
+	Possiamo anche far vedere facilmente che, preso $A: V \to V$, avremo che, prendendo la base ortonormale $\{ e_i \}_{i\in\{ 1,\ldots, n \}}$, la seguente relazione per i termini che compongono la matrice associata
+	\begin{align*}
+	w &= A(z) = \sum_{i=1}^n z_i A(e_i) = \sum_{i=1} w_j e_j \text{ dove } w_j = (e_j, w) = (e_j, w) = (e_j, \sum_{i=1}^n z_i A(e_i)) = & \\
+	&= (e_j, \sum_{i=1}^n z_i \sum_{l=1}^n (Ae_i, e_l)e_l) = \sum_{i=1}^n z_i(e_j, \sum_{l=1}^n (Ae_i, e_l) e_l) = \sum_{i=1}^n \sum_{l=1}^n z_i \left[ (Ae_i, e_l)(e_j, e_l) \right] = \\
+	&= \sum_{i=1}^n z_i (Ae_i, e_j) 
+	\end{align*}
+	Nel caso di spazio vettoriale munito di prodotto scalare è comodo definire l'operatore aggiunto
+	\begin{definition}[operatore autoaggiunto]
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale, allora preso $T:V \to V$ definiamo l'operatore aggiunto come quell'operatore $T^\dag: V \to V$ tale che
+		$$
+		(T^{\dag} w, v) = (w, Tv) \, \, \forall v, w \in V.
+		$$
+	\end{definition}
+	\begin{remark}
+		In $\text{dim}(V)=1$ l'aggiunto è l'operatore complesso coniugato.
+	\end{remark}
+	Osserviamo che, in base ortogonale, $[T]_{ij} = (e_i, Te_j)$ ma $[T^{\dag}]_{ij} = (e_i, T^{\dag}e_j) = (T^{\dag} e_j, e_i)^* = (e_j, T e_i)^{*} = [T^*]_{ji}$, dunque vale (solo in base ortogonale!) che $T^{\dag} = (T^t)^*$. Possiamo inoltre facilmente
+	mostrare che $(T^{\dag})^{\dag} = T$: infatti, preso $(e_i, Te_j) = (T^{\dag}e_i, e_j) = (e_j, T^{\dag} e_i)^*=((T^{\dag})^{\dag}e_j, e_i)^* = (e_i, (T^{\dag})^{\dag} e_j)$ e ciò è possibile se e solo se $(T^{\dag})^\dag = T$. Infine, possiamo mostrare che
+	\begin{prop}
+		\begin{align*}
+			&(T_1T_2)^{\dag} = T_2^\dag T_1^\dag \\
+			&(\alpha_1 T_1 + \alpha_2 T_2) = \alpha_1^* T_1^* + \alpha_2^* T_2^*
+		\end{align*}
+	\end{prop}
+	\begin{definition}[operatore autoaggiunto]
+		Sia $V$ uno $\mathbb{C}-$spazio vettoriale e sia $T: V \to V$ un operatore. Diremo che esso è autoaggiunto se $T^{\dag} = T$.
+	\end{definition}
+	Per quanto visto prima, sappiamo che $[T]_{ij} = [T^{\dag}]_{ji} \implies [T^{\dag}] = [T]$.
+	\section{Autovalori e autovettori}
+	
+	\begin{definition}
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale e sia $A: V \to V$ un operatore. Allora diremo che $\lambda \in \mathbb{C}$ è un autovalore se $\exists v \in \mathbb{V} : A(v) = \lambda v$.
+	\end{definition}
+	\begin{prop}
+		Dato $\lambda \in \mathbb{C}$ l'insieme dei possibili autovettori è un sottospazio vettoriale $V_\lambda \subset V$
+		$$
+		\lambda \in \mathbb{C} \longrightarrow V_{\lambda} \text{ autospazio}.
+		$$
+	\end{prop}
+	Sia $\lambda \in \mathbb{C}$ un autovalore e sia $V_\lambda$ un autospazio con $\text{dim}(V_{\lambda}) \geq 1$. Allora $\forall v \in V_\lambda, A(v) = \lambda v$ e presa $(\underbrace{v_1, \ldots, v_m}_{\text{base di $V_\lambda$}}, \underbrace{v_{m+1}, \ldots, v_n}_{\text{base di $V \setminus V_\lambda$}})$ avremo che
+	$$
+		[A] = \begin{pmatrix}
+			\lambda \text{Id}_{m \times m} & \ast_{(n-m) \times (n-m)}\\
+			0_{(n-m) \times (n-m)} & \ast_{(n-m) \times (n-m)}
+		\end{pmatrix}
+	$$
+	\chapter{Prima esercitazione}
+
+	A lezione abbiamo visto che, presi $x, y \in \mathcal{H}$, con $\mathcal{H}$ spazio di Hilbert allora
+	$$
+		|(x, y)| \leq ||x|| \, ||y||.
+	$$
+	Possiamo dare una dimostrazione più formale di tale disuguaglianza nella seguente maniera
+	\begin{proof}
+	
+	\end{proof}
+	Adesso andiamo ad introdurre le $p-$norme
+	\begin{definition}
+		$x \in \mathcal{H}, ||x||_p = (\sum_{k} |x_k|^p)^{\frac{1}{p}}, p \geq 1$.
+	\end{definition}
+	\begin{prop}[disuguaglianza di Holder] \hspace{1cm} \\
+		Siano $p, q \geq 1 : \frac{1}{p} + \frac{1}{q} = 1 \implies |\sum\limits_i x_i y_i| \leq (\sum\limits_i |x_i|^p)^{\frac{1}{p}} (\sum\limits_{i} |y_i|^{\frac{1}{q}})^q$
+	\end{prop}
+	\begin{proof}
+		
+	\end{proof}
 
 	%\addcontentsline{toc}{chapter}{Bibliografia}
 	%\bibliographystyle{unsrt}
