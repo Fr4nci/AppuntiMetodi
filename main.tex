@@ -498,7 +498,7 @@
 	(z, w) = (\sum_{i=1}^n z_i e_i , \sum_{j=1}^n w_j e_j) = \sum_{i=1}^n \sum_{j=1}^n z_i^* w_j (e_i, e_j) = \sum_{i=1}^n \sum_{j=1}^n z_i^* w_j \delta_{ij} = \sum_{i=1}^n z_i^* w_i.
 	$$
 	\begin{remark}
-		Possiamo capire, dalla forma in cui si presenta in base ortonormale il prodotto scalare, che il prototipo perfetto di prodotto scalare è quello usuale che avevamo definito in $\mathbb{C}^n$ in base canonica e, possibilmente, vorremmo ricondurci sempre trovando sempre una base ortonormale.
+		Possiamo capire, dalla forma in cui si presenta in base ortonormale il prodotto scalare, che il prototipo perfetto di prodotto scalare è quello usuale che avevamo definito in $\mathbb{C}^n$ in base canonica a cui, possibilmente, vorremmo ricondurci sempre trovando sempre una base ortonormale.
 	\end{remark}
 	Inoltre, in una base ortonormale $\{ e_1, \ldots, e_n \}$, è possibile ricavare le coordinate di un vettore in maniera abbastanza agevole: infatti, sfruttando l'ortogonalità fra i vettori della base, si vede che, preso $z \in V$ con coordinate (rispetto alla base ortogonale) $(z_1, \ldots, z_n)$, allora
 	$$
@@ -558,18 +558,125 @@
 	$$
 	Possiamo dare una dimostrazione più formale di tale disuguaglianza nella seguente maniera
 	\begin{proof}
-	
+		sappiamo che $(\cdot, \cdot) \geq 0 \, \, \forall z \in \mathcal{H}$. Considerando allora $||x+\alpha y||^2 \geq 0 \, \, \forall \alpha \in \mathbb{C}$. Scrivendo $\alpha$ in forma esponenziale avremo che $\exists t \in [0, +\infty), \theta \in [0, 2\pi] : \alpha = te^{i\theta}$, pertanto
+		\begin{align*}
+			p(t) &= (x + te^{i\theta}y, x + te^{i\theta}y) = ||x||^2 + (te^{i\theta})(x, y) + (te^{i\theta} (x, y))^* + ||y||^2 = \\ 
+			&=||x||^2 + 2 \text{Re}(e^{i\theta}(x, y)) + t^2 ||y||^2 \implies \Delta^2 = Re(e^{i \theta}(x, y))^2 - ||x||^2||y||^2 \leq 0
+		\end{align*}
+		ma siccome questa relazione è valida $\forall \theta \in [0, 2\pi]$ allora possiamo prendere un $\bar{\theta}$ per cui $e^{i\theta}(x, y) \in \mathbb{R}^{\geq 0}.$ In tal caso avremo che
+		$$
+			\text{Re}(e^{i\bar{\theta}}(x, y)) = e^{i\bar{\theta}}(x, y) = |(x, y)|.
+		$$
+		Questo ci permette di concludere allora che
+		$$
+			|(x, y)|^2 \leq ||x||^2 \, ||y||^2 \implies |(x, y)|\leq ||x|| \, ||y||.
+		$$
 	\end{proof}
 	Adesso andiamo ad introdurre le $p-$norme
 	\begin{definition}
 		$x \in \mathcal{H}, ||x||_p = (\sum_{k} |x_k|^p)^{\frac{1}{p}}, p \geq 1$.
 	\end{definition}
 	\begin{prop}[disuguaglianza di Holder] \hspace{1cm} \\
-		Siano $p, q \geq 1 : \frac{1}{p} + \frac{1}{q} = 1 \implies |\sum\limits_i x_i y_i| \leq (\sum\limits_i |x_i|^p)^{\frac{1}{p}} (\sum\limits_{i} |y_i|^{\frac{1}{q}})^q$
+		Siano $p, q \geq 1 : \frac{1}{p} + \frac{1}{q} = 1$. Allora
+		$$|\sum\limits_i x_i y_i| \leq (\sum\limits_i |x_i|^p)^{\frac{1}{p}} (\sum\limits_{i} |y_i|^{\frac{1}{q}})^q$$
 	\end{prop}
 	\begin{proof}
+		Per dimostrare questo fatto bisogna sfruttare la convessità: ricordiamo che una funzione $f: D \subset \mathbb{R} \to \mathbb{R}$ se, presi due punti $x, y \in D$ allora vale la seguente relazione
+		\begin{equation*}
+		f(tx + (1-t)y) \leq tf(x) + (1-t)f(y) \, \, \forall t \in [0, 1] \tag{$\star$}
+		\end{equation*}
+		\begin{figure}[H]
+			\centering
+			\begin{tikzpicture}[domain=0:4]
+				\draw[->] (-0.2,0) -- (4.2,0) node[right] {$x'$};
+				\draw[->] (0,-0.2) -- (0,4.2) node[above] {$f(x')$};
+				
+				% Disegna la funzione
+				\draw[color=orange] plot (\x,{0.05*exp(\x)}) node[right] {$f(x) = \frac{1}{20} \mathrm{e}^{x'}$};
+				
+				% Corregge la sintassi delle coordinate per i nodi
+				\node[] (x) at (-0.1, {0.05*exp(-0.11)-0.02}) {};
+				\node[] (y) at (3.1, {0.05*exp(3)+0.01}) {};
+				\draw[-, color=black] (x) -- (y);
+				\node[] (x_shad) at (0, 0.05) {};
+				\node[] (y_shad) at (3, {0.05*exp(3)-0.01}) {};
+				\fill[] (x_shad) circle (1pt);
+				\fill[] (y_shad) circle (1pt);
+			\end{tikzpicture}
+			\caption{Esempio di funzione convessa: la relazione $(\star)$ ci dice che il segmento che congiunge i due punti $(x, f(x))$ e $(y, f(y))$ sta sempre sopra la funzione nell'intervallo $[x, y]$}
+		\end{figure}
+		Si osserva che $\forall t \in [0, 1]$
+		\begin{align*}
+		&\ln{\sum_k |x_k y_k|} \leq \ln{\sum_k |x_k| \, |y_k|} \leq \ln{\sum_k e^{\frac{1}{p} \ln{|x_k|^p} + \frac{1}{q} \ln{|y_k|^q}}} \leq \ln{\frac{1}{p} \sum_k  e^{\ln{|x_k|^p}} + \frac{1}{q} \sum_k e^{\ln{|y_k|^q}}} \implies \\
+		&\implies \sum_k |x_k y_k| \leq \left( \sum_k |x_k|^p \right)^{\frac{1}{p}} \left( \sum_k |y_k|^q \right)^q
+		\end{align*}
+	\end{proof}
+	\section{13/09/2024}
+	Sia $\{ e_k \}_{k=1}^N$ è base ortonormale ($\iff (e_p, e_q) = \delta_{pq}$), preso $N_n = \text{Span}(\{ e_k \}^N_{k=1})$ e preso $Te_k = \frac{1}{\sqrt{k}} \sum_{p=1}^k e_k$. Mostrare che $V_n$ è $T-$invariante ($\iff TV_n \subseteq V_n$).
+	\begin{proof}
+		Preso un generico vettore $x \in V_n$ allora
+		$$
+		x = \alpha_1 e_1 + \ldots + \alpha_N e_N \implies Tx = \sum_{k=1}^N \alpha_k T(e_k) = \sum_{k=1}^N \frac{1}{\sqrt{k}} \sum_{l=1}^k e_l = \sum_{k=1}^N \sum_{l=1}^k \frac{x_k}{\sqrt{k}} e_l.
+		$$
+		Posto $\beta_k = \sum_{k=1}^N \frac{x_k}{\sqrt{k}} \implies Tx = \sum_{k=1}^N \sum_{l=1}^k \beta_k e_l$, dunque è pur sempre combinazione degli elementi della base di $V_n$. Altrimenti potevamo osservare che
+		$$
+		[T|_{V_n}]_{pq} = (e_p, Te_q) = (e_p, \frac{1}{\sqrt{q}} \sum_{l=1}^q e_l) = \frac{1}{\sqrt{q}} \sum_{l=1}^q (e_p, e_l) = \frac{1}{\sqrt{q}} \delta_{pl}.
+		$$
+		Se $p \geq q \implies (e_p, Te_q) = 0$, se $p \leq q \implies (e_p, Te_q) = \frac{1}{\sqrt{q}}$ dunque la matrice $[T|_{V_n}]$ è una matrice triangolare superiore, pertanto ogni vettore della base verrà rimandato in $V_n$.
 		
 	\end{proof}
+	\chapter{Quarta lezione}
+
+	Consideriamo $A: V \to V$ e sia $V_\lambda \subset V$ autospazio. Preso $v_\lambda \in V_\lambda$ allora  $Av_\lambda = \lambda v_\lambda$ fissiamo una base del tipo ${\underbrace{v_1, \ldots, v_m}_\text{base di $V_\lambda$}, \underbrace{v_{m+1}, \ldots, v_n}_\text{resto di V}}$ e scriviamo $A$ in forma matriciale
+	$$
+		[A] = \begin{pmatrix}
+			\lambda \text{Id}_{m \times m} & \ast_{(m) \times (n-m)}\\
+			0_{(n-m) \times (m)} & \ast_{(n-m) \times (n-m)}
+		\end{pmatrix}
+	$$
+	Supponiamo che siano $\lambda_1, \ldots, \lambda_k$ autovalori $\implies \exists V_{\lambda_1}, \ldots, V_{\lambda_k} \subset V$: chiaramente $\text{dim}(V) \geq \sum\limits_k \text{dim}(V_{\lambda_k})$ dunque
+	$$
+	[A] = \begin{bmatrix}
+		\lambda_1 \text{Id} & 0 & 0 & \ldots & \ast \\
+		0 & \lambda_2 \text{Id} & 0 & \ldots & \ast \\
+		\vdots & 	\vdots		&		\ddots & \ddots & \ast \\
+		0 & 0 &		0 & \lambda_k \text{Id} & \ast \\
+		0 & 0 & 	0 	& \ldots & \ast\\
+	\end{bmatrix}.
+	$$
+	Se $\text{dim}(V) = \sum\limits_k \text{dim}(V_{\lambda_k})$ si dice che $A$ è completamente diagonalizzabile. Osserviamo che se $T = T^*$ e se lavoriamo in un $\mathbb{C}-$spazio vettoriale munito di prodotto scalare allora $(v_\lambda, Tv_\lambda) = \lambda (v_\lambda, v_\lambda) = (T^* v_\lambda, v_\lambda) = (\lambda^* v_\lambda, v_\lambda) = \lambda^* (v_\lambda, v_\lambda) \implies (\lambda - \lambda^*) (v_\lambda, v_\lambda) = 0 \implies \lambda = \lambda^*$.
+	Dato $V_\lambda \subset V$ se scegliamo una base ortonormale come $\{ \underbrace{e_1, \ldots, e_m}_\text{base di V}, \underbrace{e_{m+1}, \ldots, e_n}_\text{resto di V} \}$ allora
+	\begin{align*}
+	&[T] = \begin{bmatrix}
+		\lambda \text{Id}_{m \times m} & 0_{m \times (n - m)} \\
+		0_{(n-m) \times m} & [T]_{|V_\lambda^\perp}
+	\end{bmatrix} & &\text{dove } [T] = [T]^{t \ast} \text{ e si ha che } [T]_{|V_\lambda^\perp} = [T]_{V_\lambda^\perp}^{\dag}
+	\end{align*}
+	\begin{prop}
+		Se $(V, (\cdot, \cdot))$ è uno spazio munito di prodotto scalare definito positivo allora $W \subset V$ è un sottospazio vettoriale allora
+		$$
+			V = W \circled{+} W^\perp
+		$$
+	\end{prop}
+	\begin{proof}
+		Dalla formula delle dimensioni dell'ortogonale abbiamo che
+		$$
+		\text{dim}(V) - \text{dim}(W \cap V^\perp) = \text{dim}(W) + \text{dim}(W^{\perp})
+		$$
+		ma osserviamo che $V^\perp = \{ 0 \} \implies \text{dim}(W^\perp) = \text{dim}(V) - \text{dim}(W)$. A questo punto si osserva che $W \cap W^{\perp} = \{ 0 \}$ (se per assurdo $\exists v \neq 0 \in W \cap W^{\perp} \implies (v, w) = 0 \, \, \forall w \in W \implies (v, v) = 0 \implies \text{assurdo! Il prodotto scalare è definito positivo}$). Dunque, avremo che $W$ e $W^{\perp}$ possono essere messi in somma diretta e generano $V$ siccome la somma delle loro dimensioni è coincide con quella di $V$.
+	\end{proof}
+	\begin{prop}
+		Se $\alpha_1 \neq \alpha_2 \in \mathbb{C}$ sono due distinti autovalori dell'operatore autoaggiunto $T:V \to V$ con $V$ $\mathbb{C}-$spazio vettoriale allora $V_{\lambda_1} \perp V_{\lambda_2}$.
+	\end{prop}
+	\begin{proof}
+		Se $\alpha_1 \neq \alpha_2 \in \mathbb{C}$ allora, presi $v_1 \in V_{\alpha_1}$ e $v_2 \in V_{\alpha_2}$, si ha che $(v_2, Tv_1) = (v_2, \lambda_1 v_1) = \lambda_1 (v_2, v_1) = (Tv_2, v_1) = \lambda_2 (v_2, v_1) \implies (\lambda_1 - \lambda_2) (v_2, v_1) = 0 \implies (v_2, v_1) = 0$. Dall'arbitrarietà dei due vettori appartenenti ai due distinti sottospazi segue che i due sottospazi sono ortogonali.
+	\end{proof}
+	Consideriamo sempre $A: V \to V$ con $\{ v_1, \ldots, v_n \}$ base di $V$, se "esprimiamo" $A$ come matrice allora se $v = \sum\limits_i \alpha_i v_i$ e $Av = \sum\limits_i \mu_i v_i$ allora $\mu_i = \sum\limits_j [A]_{ij} \alpha_j$ dunque $v \mapsto Av$ e $\{ \alpha_i \} \mapsto \{ \sum\limits_j [A]_{ij} \alpha_j \}$. 
+
+
+
+
+
 
 	%\addcontentsline{toc}{chapter}{Bibliografia}
 	%\bibliographystyle{unsrt}
