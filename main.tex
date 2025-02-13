@@ -268,7 +268,7 @@
 		$\boxed{\Leftarrow}$: se $\text{Ker}(A) = \{ 0 \}$ allora avremo che se per assurdo $\exists v, w \in V : A(v) = A(w)$ con $v \neq w$ allora $A(v - w) = 0 \implies v - w \in \text{Ker}(A) \implies v = w$.
 	\end{proof}
 	\begin{theorem}[della dimensione]
-		Siano $V, W$ due campi vettoriali sul medesimo campo e sia $A: V \to W$ un'applicazione lineare. Allora avremo che
+		Siano $V, W$ due spazi vettoriali sul medesimo campo, $V$ a dimensione finita e sia $A: V \to W$ un'applicazione lineare. Allora avremo che
 		$$
 		\text{dim}(V) = \text{dim}(\text{Ker}(A)) + \text{dim}(\text{Im}(A)).
 		$$
@@ -644,7 +644,12 @@
 		0 & 0 & 	0 	& \ldots & \ast\\
 	\end{bmatrix}.
 	$$
-	Se $\text{dim}(V) = \sum\limits_k \text{dim}(V_{\lambda_k})$ si dice che $A$ è completamente diagonalizzabile. Osserviamo che se $T = T^*$ e se lavoriamo in un $\mathbb{C}-$spazio vettoriale munito di prodotto scalare allora $(v_\lambda, Tv_\lambda) = \lambda (v_\lambda, v_\lambda) = (T^* v_\lambda, v_\lambda) = (\lambda^* v_\lambda, v_\lambda) = \lambda^* (v_\lambda, v_\lambda) \implies (\lambda - \lambda^*) (v_\lambda, v_\lambda) = 0 \implies \lambda = \lambda^*$.
+	Se $\text{dim}(V) = \sum\limits_k \text{dim}(V_{\lambda_k})$ si dice che $A$ è completamente diagonalizzabile o diagonalizzabile. \\
+	Osserviamo che se $T = T^*$ e se lavoriamo in un $\mathbb{C}-$spazio vettoriale munito di prodotto scalare allora $(v_\lambda, Tv_\lambda) = \lambda (v_\lambda, v_\lambda) = (T^* v_\lambda, v_\lambda) = (\lambda^* v_\lambda, v_\lambda) = \lambda^* (v_\lambda, v_\lambda) \implies (\lambda - \lambda^*) (v_\lambda, v_\lambda) = 0 \implies \lambda = \lambda^*$.
+	Abbiamo quindi mostrato la seguente proposizione
+	\begin{prop}
+	Sia $A: V \to V$ dove $V$ $\mathbb{C}-$spazio vettoriale e $A$ è un operatore autoaggiunto. Allora gli autovalori di $A$ sono tutti reali.
+	\end{prop}
 	Dato $V_\lambda \subset V$ se scegliamo una base ortonormale come $\{ \underbrace{e_1, \ldots, e_m}_\text{base di V}, \underbrace{e_{m+1}, \ldots, e_n}_\text{resto di V} \}$ allora
 	\begin{align*}
 	&[T] = \begin{bmatrix}
@@ -652,6 +657,7 @@
 		0_{(n-m) \times m} & [T]_{|V_\lambda^\perp}
 	\end{bmatrix} & &\text{dove } [T] = [T]^{t \ast} \text{ e si ha che } [T]_{|V_\lambda^\perp} = [T]_{V_\lambda^\perp}^{\dag}
 	\end{align*}
+
 	\begin{prop}
 		Se $(V, (\cdot, \cdot))$ è uno spazio munito di prodotto scalare definito positivo allora $W \subset V$ è un sottospazio vettoriale allora
 		$$
@@ -666,16 +672,82 @@
 		ma osserviamo che $V^\perp = \{ 0 \} \implies \text{dim}(W^\perp) = \text{dim}(V) - \text{dim}(W)$. A questo punto si osserva che $W \cap W^{\perp} = \{ 0 \}$ (se per assurdo $\exists v \neq 0 \in W \cap W^{\perp} \implies (v, w) = 0 \, \, \forall w \in W \implies (v, v) = 0 \implies \text{assurdo! Il prodotto scalare è definito positivo}$). Dunque, avremo che $W$ e $W^{\perp}$ possono essere messi in somma diretta e generano $V$ siccome la somma delle loro dimensioni è coincide con quella di $V$.
 	\end{proof}
 	\begin{prop}
-		Se $\alpha_1 \neq \alpha_2 \in \mathbb{C}$ sono due distinti autovalori dell'operatore autoaggiunto $T:V \to V$ con $V$ $\mathbb{C}-$spazio vettoriale allora $V_{\lambda_1} \perp V_{\lambda_2}$.
+		Se $\alpha_1 \neq \alpha_2 \in \mathbb{R}$ sono due distinti autovalori dell'operatore autoaggiunto $T:V \to V$ con $V$ $\mathbb{C}-$spazio vettoriale allora $V_{\lambda_1} \perp V_{\lambda_2}$.
 	\end{prop}
 	\begin{proof}
 		Se $\alpha_1 \neq \alpha_2 \in \mathbb{C}$ allora, presi $v_1 \in V_{\alpha_1}$ e $v_2 \in V_{\alpha_2}$, si ha che $(v_2, Tv_1) = (v_2, \lambda_1 v_1) = \lambda_1 (v_2, v_1) = (Tv_2, v_1) = \lambda_2 (v_2, v_1) \implies (\lambda_1 - \lambda_2) (v_2, v_1) = 0 \implies (v_2, v_1) = 0$. Dall'arbitrarietà dei due vettori appartenenti ai due distinti sottospazi segue che i due sottospazi sono ortogonali.
 	\end{proof}
-	Consideriamo sempre $A: V \to V$ con $\{ v_1, \ldots, v_n \}$ base di $V$, se "esprimiamo" $A$ come matrice allora se $v = \sum\limits_i \alpha_i v_i$ e $Av = \sum\limits_i \mu_i v_i$ allora $\mu_i = \sum\limits_j [A]_{ij} \alpha_j$ dunque $v \mapsto Av$ e $\{ \alpha_i \} \mapsto \{ \sum\limits_j [A]_{ij} \alpha_j \}$. 
-
-
-
-
+	Consideriamo sempre $A: V \to V$ con $\{ v_1, \ldots, v_n \}$ base di $V$ e, usando sempre la solita strategia dell'isomorfismo fra basi, possiamo rappresentare l'azione di  $A$ sui vettori tramite la sua matrice associata, dunque se $v = \sum\limits_i \alpha_i v_i$ e $Av = \sum\limits_i \mu_i v_i$ allora $\mu_i = \sum\limits_j [A]_{ij} \alpha_j$ dunque $v \stackrel{A}{\mapsto} Av$ e $\{ \alpha_i \} \stackrel{[A]}{\mapsto} \{ \sum\limits_j [A]_{ij} \alpha_j \}$. 	\\
+	Una cosa che possiamo fare è quello di cambiare la base in partenza e in arrivo: nel caso degli operatori completamente diagonalizzabili è sicuramente conveniente tenere come base in partenza e in arrivo la base costituita da autovettori, tuttavia questa operazione di cambio di base si può pensare di fare anche per operatori del tipo $A: V \to W$ dove $V \neq W$. Presa $\mathcal{B} = \{ v_1, \ldots, v_n \}$ e $\mathcal{B}' = \{ w_1, \ldots, w_n \}$ due distinte basi di $V$, allora possiamo definire $N$ come matrice di cambio base tale che $w_i = \sum\limits_j N_{ji} v_j$, dunque preso $x \in V$ allora
+	\begin{align*}
+	&x = \sum_i^n \alpha_i w_i = \sum_i^n \alpha_i \sum_j^n N_{ji} v_j = \sum_j^n \sum_i^n N_{ji} \alpha_i v_j = \sum_j^n \mu_j v_j & &\text{dove } \mu_j = \sum_i^n N_{ji} \alpha_i
+	\end{align*}
+	Osserviamo, posto che $v_i = \sum\limits_{j}^n N^{-1}_{ji} w_j$, si ha che la matrice di $A$ nella nuova base $\mathcal{B}'$ è chiaramente pari a $[A]' = [N]^{-1} [A] [N]$: questo perché
+	\begin{align*}
+	Aw_i = A \left( \sum_{j}^n N_{ji}v_j \right) = \sum_{j}^n N_{ji} Av_j = \sum_j^n \sum_s^n N_{ji} A_{sj} v_s &= \sum_j^n \sum_s^n \sum_r^n N_{ji} A_{sj} N^{-1}_{rs} w_r = \\
+	&= \sum_{r}^n \sum_{s}^n \sum_{j}^n N^{-1}_{rs} A_{sj} N_{ji} w_r = \\
+	&= \sum_{r}^n (N^{-1} A N)_{ri} w_r
+	\end{align*}
+	Osserviamo adesso che la condizione affinché esista un autovalore $\lambda$ è che l'equazione $Av = \lambda v$ abbia soluzione: in base $\mathcal{B}$ possiamo scrivere che
+	\begin{align*}
+	&Av = \lambda v \iff Av - \lambda v = 0 \iff Av - \lambda \text{Id} v = 0 \iff \sum_j (A_{ij} - \lambda \delta_{ij})v_j = 0 \iff \\
+	&\iff \det([A] - \lambda \text{Id}) = 0.
+	\end{align*}
+	Abbiamo quindi mostrato il seguente teorema
+	\begin{theorem}
+		Sia $A: V \to V$ con $V$ $\mathbb{C}-$spazio vettoriale a dimensione finita, allora $\lambda \in \mathbb{C}$ è autovalore se e solo se
+		$$
+			\det([A] - \lambda \text{Id}) = 0.
+		$$
+	\end{theorem}
+	E' un'equazione di grado $n$ che ha $0 < k \leq n$ radici complesse. Vale la seguente proposizione
+	\begin{prop}
+		$\det([A] - \lambda \text{Id})$ è indipendente dalla base scelta
+	\end{prop}
+	\begin{proof}
+		Osserviamo che se riscriviamo la matrice associata ad $A$ in una qualunque altra base allora $[A]' = [N^{-1}][A][N]$
+		$$
+		\det{([A]' - \lambda \text{Id})} = \det{([N^{-1}][A][N] - \lambda [N^{-1}][N])} = \det{[N^{-1}]([A] - \lambda \text{Id})[N]} = \det{([A] - \lambda \text{Id})}
+		$$
+		dove si è usato il teorema di Binet nell'ultimo passaggio. Si conclude che se $\lambda \in \mathbb{C}$ è radice di $\det{([A] - \lambda \text{Id})}$ allora è radice di $\det{([A]' - \lambda \text{Id})}$, quindi gli autovalori non dipendono dalla base scelta.
+	\end{proof}
+	\begin{definition}[polinomio caratteristico]
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale a dimensione finita e sia $A: V \to V$ un operatore, allora diremo che
+		$$
+		p_A(\lambda) = \det{([A] - \lambda \text{Id})}
+		$$
+		è il polinomio caratteristico.
+	\end{definition}
+	\begin{remark}
+		Lavorando in $\mathbb{C}$ (che ricordiamo essere algebricamente chiuso) allora
+		$$
+		p_A(\lambda) = \prod_{i=1}^k (\lambda - \bar{\lambda}_{i})^{n_i}
+		$$
+		dove $0 < k \leq n$ è il numero di radici complesse, $\bar{\lambda}_i$ è l'$i-$esima radice che il nostro polinomio possiede e $n_i$ è la molteplicità algebrica dell'$i-$esima radice.
+	\end{remark}
+	Osserviamo che l'esistenza di una radice $\lambda$ implica che $\text{dim}V_\lambda \geq 1$ ma è un risultato ben noto che se $m_a(\lambda)$ è la molteplicità algebrica di $\lambda$ allora deve risultare che
+	$$
+	m_a(\lambda_i) = \text{dim}(V_{\lambda_i})
+	$$
+	\begin{example}[matrice dove $m_a(\lambda ) \neq \text{dim}(V_\lambda)$]
+		\begin{align*}		
+			A = \begin{bmatrix}
+				1 & 0 \\
+				1 & 1
+			\end{bmatrix} \implies p_A(\lambda) = (1 - \lambda)^2
+		\end{align*}
+	\end{example}
+	\section{Teorema spettrale}
+	\begin{theorem}[spettrale per gli operatori autoaggiunti]
+		Sia $(V, (\cdot, \cdot))$ uno spazio vettoriale munito di prodotto scalare con $\text{dim}(V) < \infty$. Se $T: V \to V$ è un operatore autoaggiunto allora
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $T$ è diagonalizzabile;
+			\item $T$ possiede autovalori reali
+		\end{enumerate}
+	\end{theorem}
+	\begin{proof}
+		La $\circled{2}$ è già stata mostrata. Per quanto riguarda la $\circled{1}$ procediamo per induzione sulla dimensione di $V$
+	\end{proof}
 
 
 	%\addcontentsline{toc}{chapter}{Bibliografia}

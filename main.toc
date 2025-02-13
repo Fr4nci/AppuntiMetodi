@@ -8,3 +8,4 @@
 \contentsline {chapter}{\numberline {4}Prima esercitazione}{16}{chapter.4}%
 \contentsline {section}{\numberline {4.1}13/09/2024}{17}{section.4.1}%
 \contentsline {chapter}{\numberline {5}Quarta lezione}{18}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Teorema spettrale}{20}{section.5.1}%
