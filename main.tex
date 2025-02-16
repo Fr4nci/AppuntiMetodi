@@ -746,10 +746,83 @@
 		\end{enumerate}
 	\end{theorem}
 	\begin{proof}
-		La $\circled{2}$ è già stata mostrata. Per quanto riguarda la $\circled{1}$ procediamo per induzione sulla dimensione di $V$
+		La $\circled{2}$ è già stata mostrata. Per quanto riguarda la $\circled{1}$ procediamo per induzione sulla dimensione di $V$: per $n=1$ è banalmente vero; mostriamo che $n \implies n+1$ sia $v$ un autovettore di $T$, allora sappiamo che
+		$$
+		V = \text{Span}(v) \, \circled{+} \, (\text{Span}(v))^\perp
+		$$
+		pertanto possiamo considerare la base $\mathcal{B} = \{ v, \underbrace{w_1, \ldots, w_n}_\text{base di $(\text{Span}(v))^\perp$} \}$. Osserviamo allora che
+		preso $w \in (\text{Span}(v))^\perp$ allora
+		$$
+		(Tv, Tw) = (\lambda v, Tw) = 0
+		$$
+		dunque l'unica possibilità è che $Tw \in (\text{Span}(v))^\perp \implies (\text{Span}(v))^\perp$ è $T-$invariante e chiaramente $\forall u \in (\text{Span}(v))^\perp, T_{|(\text{Span}(v))^\perp}(u) = T(u)$, dunque $T_{|(\text{Span}(v))^\perp}$ è sempre autoaggiunto: possiamo dunque applicare l'ipotesi induttiva e concludere che è diagonalizzabile
 	\end{proof}
+	Possiamo generalizzare il seguente risultato anche ai cosiddetti operatori normali
+	\begin{definition}[operatore normale]
+		Sia $T: V \to V$ con $V$ $\mathbb{C}-$spazio vettoriale. Diremo che $T$ è normale se $T$ commuta con la sua aggiunta, ovvero se
+		$$
+			TT^{\dag} = T^{\dag} T
+		$$
+	\end{definition}
+	Possiamo facilmente vedere che gli operatori autoaggiunti e gli operatori unitari rientrano in questa categoria: infatti osserviamo che se $T$ è autoaggiunto allora
+	$$
+	T^{\dag} T = T^2 = T T^\dag
+	$$
+	mentre per gli operatori unitari
+	$$
+		T^{\dag} T = T^{-1} T = \text{Id} = T T^{-1} = T T^{\dag}.
+	$$
+	Osserviamo che vale la seguente proposizione
+	\begin{lemma}
+		Se $T: V \to V$ è un operatore normale allora $\lambda$ è un autovalore di $T \iff \bar{\lambda}$ è un autovalore di $T^{\dag}$. Inoltre
+		$$
+			V_\lambda(T) = V_{\bar{\lambda}}(T)
+		$$
+	\end{lemma}
+	\begin{proof}
+		E' sufficiente mostrare che $\forall v \in V, T(v) = \lambda v \iff T^{\dag}(v) = \bar{\lambda} T(v)$. Osserviamo che se mostriamo che $T(v) = \lambda v \implies T^{\dag} (v) = \bar{\lambda} v$ allora segue che se $T^{\dag}(v) = \lambda' v \implies (T^{\dag})^{\dag} (v) = T(v) = \bar{\lambda'}v \implies T^{\dag}(v) = \bar{\lambda}v$: è dunque sufficiente mostrare una sola delle due implicazioni, per esempio la $\Rightarrow$. Si osserva
+		$$
+		T^\dag (v) = \bar{\lambda} v \iff (T^\dag(v) - \bar{\lambda}{v}, T^{\dag}(v) - \bar{\lambda}(v)) = 0.
+		$$
+		Dunque è sufficiente mostrare che vale la seconda proposizione per dimostrare questo lemma: siccome $T$ è normale, $T$ e $T^{\dag}$ commutano e dunque preso $v \in V_\lambda(T)$
+		$$
+		T T^{\dag} (v) = T^{\dag} T(v) = \lambda T^{\dag} (v) \implies T^{\dag}(v) - \bar{\lambda}(v) \in V_{\lambda}(T),
+		$$
+		d'altra parte abbiamo che, preso $w \in V_\lambda(T)$, la seguente relazione
+		$$
+		(T^{\dag}(v), w) = (v, Tw) =  (v, \lambda w) = \lambda (v, w) = (\bar{\lambda}v, w) \implies (T^{\dag}(v) - \bar{\lambda}v, w) = 0
+		$$
+		e prendendo $w = T^{\dag}(v) - \bar{\lambda}v$ (che sappiamo appartenere a $V_\lambda(T)$ siccome abbiamo visto che $T$ e $T^{\dag}$ preservano i rispettivi autospazi) avremo che
+		$$
+		(T^{\dag}(v) - \bar{\lambda}v, T^{\dag}(v) - \bar{\lambda} v) = 0 \iff T^{\dag}(v) = \bar{\lambda}v
+		$$
+	\end{proof}
+	Possiamo generalizzare la dimostrazione fatta per gli operatori autoaggiunti anche per gli operatori normali
+	\begin{theorem}[teorema spettrale per gli operatori normali in dimensione finita]
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale a dimensione finita munito di prodotto scalare $(\cdot, \cdot)$, sia $\mathcal{B}$ una base ortonormale e sia $T: V \to V$ un operatore normale. Allora $\exists \mathcal{B}'$ base di autovettori ortonormali rispetto al prodotto scalare 
+	\end{theorem}
+	\begin{proof}
+	Preso $v \in V$ autovettore di $T$ allora possiamo decomporre $V$ come
+	$$
+		V = \text{Span}(v) \circled{+} (\text{Span}(v))^\perp
+	$$
+	e osservare che $\text{Span}(v)$ è $T-$invariante $\iff$ $T^{\dag}-$invariante. Ne segue allora che anche $(\text{Span}(v))^{\perp}$ è $T-$invariante e $T^{\dag}-$invariante: infatti preso $z \in (\text{Span}(v))^\perp$ chiaramente $(v, z) = 0$ e
+	$$
+	(v, T(z)) = (T^{\dag}(v), w) = (\bar{\lambda}v, w) = \lambda(v, w) = 0 \implies T(z) \in (\text{Span}(v))^{\perp}
+	$$
+	e similmente si mostra che $T^{\dag}(w) \in (\text{Span}(v))^{\perp}$, dunque $(\text{Span}(v))$ è $T-$invariante e $T^{\dag}-$invariante. Chiaramente $(T_{|(\text{Span}(v))^\perp})^{\dag} = T^{\dag}_{|(\text{Span}(v))^\perp}$ (dove il primo aggiunto va inteso rispetto a $(\cdot, \cdot)_{(\text{Span}(v))^\perp}$), da cui segue che $T_{|(\text{Span}(v))^\perp}$ è un operatore normale su $(\text{Span}(v))^\perp$ e procedendo per induzione si ottiene la tesi.
+	\end{proof}
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			
+		\end{tikzpicture}
+	\end{figure}
 
 
+	\chapter{Seconda esercitazione}
+
+	Riprendiamo l'esercizio della scorsa volta.
 	%\addcontentsline{toc}{chapter}{Bibliografia}
 	%\bibliographystyle{unsrt}
 	%\bibliography{bibliography.bib}

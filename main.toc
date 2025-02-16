@@ -9,3 +9,4 @@
 \contentsline {section}{\numberline {4.1}13/09/2024}{17}{section.4.1}%
 \contentsline {chapter}{\numberline {5}Quarta lezione}{18}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Teorema spettrale}{20}{section.5.1}%
+\contentsline {chapter}{\numberline {6}Seconda esercitazione}{23}{chapter.6}%
