@@ -757,6 +757,38 @@
 		$$
 		dunque l'unica possibilità è che $Tw \in (\text{Span}(v))^\perp \implies (\text{Span}(v))^\perp$ è $T-$invariante e chiaramente $\forall u \in (\text{Span}(v))^\perp, T_{|(\text{Span}(v))^\perp}(u) = T(u)$, dunque $T_{|(\text{Span}(v))^\perp}$ è sempre autoaggiunto: possiamo dunque applicare l'ipotesi induttiva e concludere che è diagonalizzabile
 	\end{proof}
+	In realtà potremmo mostrare, tramite il teorema di triangolizzazione forte, che se $T$ è un operatore unitario allora $\exists \mathcal{B}'$ base ortonormale di autovettori: infatti possiamo mostrare che
+	\begin{lemma}
+		Sia $T: V \to V$ un operatore unitario, allora se $W$ è un sottospazio vettoriale di $V$, vale che
+		$$
+		U(W) \subset W \implies (U(W)^{\perp}) \subset (U(W))^\perp
+		$$
+	\end{lemma}
+	\begin{proof}
+		Infatti, abbiamo che se $w \in W$, allora, per ipotesi, avremo che
+		$
+		U(w) \in W
+		$
+		ma allora preso $z \in W^{\perp}$ avremo che
+		$$
+		(T(z), w) = (z, T^{\dag} w) = (z, T^{-1} w) = (z, w') = 0
+		$$
+		siccome se $T_{|W}: W \to W \implies (T_{|W})^{-1}: W \to W$ dunque $w' \in W$ e da qui segue che il prodotto scalare faccia $0$, dunque $T(z) \in (T(W))^{\perp}$, dunque $W^{\perp}$ è $T-$invariante.
+	\end{proof}
+	\begin{theorem}[teorema spettrale per operatori unitari]
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale a dimensione finita e sia $T: V \to V$ un operatore unitario, allora $\exists \mathcal{B}'$ base ortonormale di autovettori.
+	\end{theorem}
+	\begin{proof}
+		La dimostrazione si può fare per induzione. Il caso $n=1$ è banalmente vero, mentre se vogliamo mostrare che $n-1 \implies n$ allora possiamo prendere $v \in V$ autovettore (che possiamo supporre ortonormale a meno di riscalare $v$) e osservare che
+		$$
+		V = \text{Span}(v) \circled{+} (\text{Span}(v))^\perp
+		$$
+		e osserviamo che $T(\text{Span}(v)) \subset \text{Span}(v)$, ovvero $\text{Span}(v)$ è un sottospazio $T-$invariante, dunque $(\text{Span}(v))^{\perp}$ è un sottospazio $T-$invariante per il lemma precedente. Inoltre osserviamo che $T_{|(\text{Span}(v))^{\perp}}$ è unitario siccome $\forall w, z \in (\text{Span}(v))^{\perp}$
+		$$
+			(T_{|(\text{Span}(v))^{\perp}} w, T_{|(\text{Span}(v))^\perp} z) = (Tv, Tw) = (v, w) 
+		$$
+		dunque $T_{|(\text{Span}(v))^{\perp}}$ è un operatore unitario su un sottospazio $W^\perp$ che ha dimensione $n-1$, dunque vale l'ipotesi induttiva ed esiste una base di autovettori ortonormale $\mathcal{B}=\{w_1, \ldots, w_n \} \implies \mathcal{B}' = \{ v, w_1, \ldots, w_n \}$ è base ortonormale di autovettori, ovvero la tesi.
+	\end{proof}
 	Possiamo generalizzare il seguente risultato anche ai cosiddetti operatori normali
 	\begin{definition}[operatore normale]
 		Sia $T: V \to V$ con $V$ $\mathbb{C}-$spazio vettoriale. Diremo che $T$ è normale se $T$ commuta con la sua aggiunta, ovvero se
@@ -772,6 +804,19 @@
 	$$
 		T^{\dag} T = T^{-1} T = \text{Id} = T T^{-1} = T T^{\dag}.
 	$$
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			\draw[] (-1, -1) rectangle ++(10, 5);
+			\draw (4, 1.5) ellipse (4cm and 2cm);
+			\draw (3 ,1.5) ellipse (2cm and 1cm);
+			\draw (5, 1.5) ellipse (2cm and 1cm);
+			\node (A) at (1, 4.2) {\footnotesize Algebra degli operatori}; 
+			\node (B) at (1, 3.5) {\footnotesize operatori normali};
+			\node (C) at (2.75, 2.75) {\footnotesize operatori autoaggiunti};
+			\node (B) at (5.25, 0.25) {\footnotesize operatori unitari}; 
+		\end{tikzpicture}
+	\end{figure}
 	Osserviamo che vale la seguente proposizione
 	\begin{lemma}
 		Se $T: V \to V$ è un operatore normale allora $\lambda$ è un autovalore di $T \iff \bar{\lambda}$ è un autovalore di $T^{\dag}$. Inoltre
@@ -806,20 +851,15 @@
 	$$
 		V = \text{Span}(v) \circled{+} (\text{Span}(v))^\perp
 	$$
-	e osservare che $\text{Span}(v)$ è $T-$invariante $\iff$ $T^{\dag}-$invariante. Ne segue allora che anche $(\text{Span}(v))^{\perp}$ è $T-$invariante e $T^{\dag}-$invariante: infatti preso $z \in (\text{Span}(v))^\perp$ chiaramente $(v, z) = 0$ e
+	e osservare che $\text{Span}(v)$ è $T-$invariante $\iff$ $T^{\dag}-$invariante per il lemma precedente. Ne segue allora che anche $(\text{Span}(v))^{\perp}$ è $T-$invariante e $T^{\dag}-$invariante: infatti preso $z \in (\text{Span}(v))^\perp$ chiaramente $(v, z) = 0$ e
 	$$
 	(v, T(z)) = (T^{\dag}(v), w) = (\bar{\lambda}v, w) = \lambda(v, w) = 0 \implies T(z) \in (\text{Span}(v))^{\perp}
 	$$
 	e similmente si mostra che $T^{\dag}(w) \in (\text{Span}(v))^{\perp}$, dunque $(\text{Span}(v))$ è $T-$invariante e $T^{\dag}-$invariante. Chiaramente $(T_{|(\text{Span}(v))^\perp})^{\dag} = T^{\dag}_{|(\text{Span}(v))^\perp}$ (dove il primo aggiunto va inteso rispetto a $(\cdot, \cdot)_{(\text{Span}(v))^\perp}$), da cui segue che $T_{|(\text{Span}(v))^\perp}$ è un operatore normale su $(\text{Span}(v))^\perp$ e procedendo per induzione si ottiene la tesi.
 	\end{proof}
-	\begin{figure}[H]
-		\centering
-		\begin{tikzpicture}
-			
-		\end{tikzpicture}
-	\end{figure}
-
-
+	\chapter{Quinta lezione}
+	In questa lezione ci occuperemo della topologia degli spazi vettoriali. Noi daremo delle nozioni topologiche usando la struttura di norma, tuttavia bisogna tenere presente che tutti questi concetti possono essere "svincolati" dal concetto di norma, astraendo ancora maggiormente le definizioni che daremo; tuttavia noi lavoreremo quasi sempre con degli spazi di Banach (di cui daremo la definizioni fra poco), dunque conviene dare delle definizioni più pratiche e operative 
+	che sono più adatte a come operemo "quotidianamente".
 	\chapter{Seconda esercitazione}
 
 	Riprendiamo l'esercizio della scorsa volta.
