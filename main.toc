@@ -10,4 +10,5 @@
 \contentsline {chapter}{\numberline {5}Quarta lezione}{18}{chapter.5}%
 \contentsline {section}{\numberline {5.1}Teorema spettrale}{20}{section.5.1}%
 \contentsline {chapter}{\numberline {6}Quinta lezione}{24}{chapter.6}%
-\contentsline {chapter}{\numberline {7}Seconda esercitazione}{25}{chapter.7}%
+\contentsline {section}{\numberline {6.1}Successioni}{25}{section.6.1}%
+\contentsline {chapter}{\numberline {7}Seconda esercitazione}{27}{chapter.7}%

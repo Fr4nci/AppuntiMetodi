@@ -858,11 +858,136 @@
 	e similmente si mostra che $T^{\dag}(w) \in (\text{Span}(v))^{\perp}$, dunque $(\text{Span}(v))$ è $T-$invariante e $T^{\dag}-$invariante. Chiaramente $(T_{|(\text{Span}(v))^\perp})^{\dag} = T^{\dag}_{|(\text{Span}(v))^\perp}$ (dove il primo aggiunto va inteso rispetto a $(\cdot, \cdot)_{(\text{Span}(v))^\perp}$), da cui segue che $T_{|(\text{Span}(v))^\perp}$ è un operatore normale su $(\text{Span}(v))^\perp$ e procedendo per induzione si ottiene la tesi.
 	\end{proof}
 	\chapter{Quinta lezione}
-	In questa lezione ci occuperemo della topologia degli spazi vettoriali. Noi daremo delle nozioni topologiche usando la struttura di norma, tuttavia bisogna tenere presente che tutti questi concetti possono essere "svincolati" dal concetto di norma, astraendo ancora maggiormente le definizioni che daremo; tuttavia noi lavoreremo quasi sempre con degli spazi di Banach (di cui daremo la definizioni fra poco), dunque conviene dare delle definizioni più pratiche e operative 
-	che sono più adatte a come operemo "quotidianamente".
+	Nelle scorse lezioni abbiamo introdotto varie strutture:
+	\begin{align*}
+	&(V, (\cdot, \cdot)) \text{ sp. vett. con prod. scalare } \implies (V, ||\cdot||) \text{ è anche uno sp. normato } \implies \\
+	&\implies (V, d) \text{ è anche uno sp. metrico}
+	\end{align*}
+	Nell'astratto potremmo in realtà dire che tutti queste $3$ strutture sono accomunate dal fatto di essere degli \emph{spazi topologici}. Adesso noi ci concentreremo nel dare alcune nozioni di topologia in spazi normati siccome sono quelli con cui lavoreremo, tuttavia bisogna tenere in mente che queste definizioni possono esssere "svincolate" dal concetto di norma.
+	\begin{definition}[punto di accumulazione]
+		Sia $A \subset V$, dove $(V, ||\cdot||)$ è uno spazio normato, e sia $\underline{v} \in A$, diremo che $\underline{v}$ è un punto di accumulazione di $A$ se
+		$$
+		\forall \varepsilon > 0, \exists v \neq \underline{v}: v \in A \text{ e } || v - \underline{v} || < \varepsilon.
+		$$
+	\end{definition}
+	\begin{remark}
+		Non è necessario che $\underline{v} \in A$ (per esempio basti pensare alla frontiera di un insieme aperto, come la frontiera di una palla aperta $\subset \mathbb{R}^n$ di raggio $r$ e centrata in $x_0$: abbiamo che i punti che si trovano esattamente a distanza $r$ non appartengono all'insieme, ma si può comunque trovare un punto vicino "a piacere" ad ogni punto di frontiera).
+	\end{remark}
+	\begin{definition}[limite di funzione a valori in $V$]
+		Sia $A \subset V$, dove $(V, || \cdot ||)$ e $(W, ||\cdot||')$ due spazio normati, sia $\underline{v}$ un punto di accumulazione di $A$ e sia $f: A \subset V \to W$ allora diremo che
+		$$
+			\lim_{v \to \underline{v}} f(v) = w \in W \iff \forall \varepsilon > 0, \exists \delta > 0: || v - \underline{v} || < \delta, v \neq \underline{v} \implies || f(v) - w ||' < \delta 
+		$$
+	\end{definition}
+	A questo punto possiamo anche dare la nozione di continuità
+	\begin{definition}[funzione continua in un punto]
+		Sia $A \subset V$, dove $(V, || \cdot ||)$ e $(W, ||\cdot||')$ due spazio normati, sia $\underline{v}$ un punto di accumulazione di $A$ e sia $f: A \subset V \to W$. Se $\underline{v} \in A$ e
+		$$
+			\lim_{v \to \underline{v}} f(v) = w = f(\underline{v})
+		$$
+		diremo che la funzione è continua in $\underline{v}$, mentre diremo che la funzione è continua in $A$ se è continua $\forall x \in A$.
+	\end{definition}
+	\begin{prop}[unicità del limite]
+		Se $\exists \lim\limits_{v \to \underline{v}} f(v) = L$ allora $L$ è unico 
+	\end{prop}
+	\begin{proof}
+		Supponiamo per assurdo che esistano $l_1 \neq l_2 \in W$ tali che
+		\begin{align*}
+			&\lim_{v \to \underline{v}} f(v) = l_1 & &\lim_{v \to \underline{v}} f(v) = l_2
+		\end{align*}
+		allora sappiamo che $|| l_1 - l_2|| < \alpha$. Dunque per definizione di limite, sappiamo che $\exists \delta_1, \delta_2 > 0: || v - \underline{v} || < \delta_1 \implies ||f(v) - l_1 || < \frac{\alpha}{2}$ e $||v - \underline{v} || < \delta_2 \implies ||f(v) - l_2|| < \frac{\alpha}{2}$, dunque preso $\delta = \min\{ \delta_1, \delta_2 \}$ avremo che  
+		$$
+		|| l_1 - l_2 || \underbrace{\leq}_{\text{dis. triang.}} || f(w) - l_1 || + || f(w) - l_2 || <  \frac{\alpha}{2} + \frac{\alpha}{2} = \alpha.
+		$$
+		dunque $|| l_1 - l_2 || < \alpha$, il che è un assurdo.
+	\end{proof}
+	\section{Successioni}
+	Una successione $\{ v_i \}$ con $i=1, \ldots, +\infty$ si dice successione di elementi di $V$ se $v : \mathbb{N}^{\geq 0} \to V$.
+	\begin{definition}[limite di una successione]
+		Sia $\{ x_i \}$ una successioni a valori in $V$. Diremo che $\exists \lim_{i \to +\infty} x_i = v \in V$ se $\forall \varepsilon > 0 \exists N \in \mathbb{N}: ||v - v_i|| < \varepsilon \forall i > N$.
+	\end{definition}
+	Una tipologia di successioni molto importanti sono le successioni di Cauchy (che ora definiremo formalmente), le quali sono delle successioni che "vorrebbero" avere limite (affermazione che verrà compresa per appieno nel momento in cui verrà affrontato il concetto di completezza e di completamento di uno spazio)
+	\begin{definition}[successioni di Cauchy]
+		Sia $\{ v_i \}$ una successioni a valori in $V$, diremo che essa è di Cauchy se
+		$$
+		\forall \varepsilon > 0 \exists N \in \mathbb{N}: \forall i, j > N, ||v_i - v_j || < \varepsilon.
+		$$
+	\end{definition}
+	\begin{prop}
+		Se $\{ v_i \}$ è una successione convergente allora è di Cauchy
+	\end{prop}
+	\begin{proof}
+		Siccome $\{ v_i \}$ è una successione convergente a $v \in V$, fissato $\varepsilon > 0$, abbiamo che $\exists N > 0: \forall i > N, ||v - v_i||<\frac{\varepsilon}{2}$, pertanto
+		$$
+		\forall i, j > N, || v_i - v_j || \underbrace{\leq}_{\text{dis. triang.}} ||v_i - v || + || v_j - v || < \frac{\varepsilon}{2} + \frac{\varepsilon}{2} = \varepsilon.
+		$$
+	\end{proof}
+	\begin{definition}[completezza]
+		Sia $(V, d)$ uno spazio metrico, diremo che esso è completo se ogni successione di Cauchy è convergente.
+	\end{definition}
+	\begin{definition}[spazio di Banach]
+		Sia $(V, d)$ uno spazio normato, diremo che esso è uno spazio di Banach se $(V, d)$ con $d$ distanza indotta da $||\cdot||$ è uno spazio metrico completo.
+	\end{definition}
+	\begin{definition}[spazio di Hilbert]
+		Sia $(V, (\cdot, \cdot))$ uno spazio vettoriale munito di prodotto scalare, diremo che esso è uno spazio di Hilbert se $(V, d)$ con $d$ distanza indotta da $(\cdot, \cdot)$ è uno spazio metrico completo.
+	\end{definition}
+	\begin{definition}[palla aperta]
+		Sia $v \in V$ e $R > 0$, definiamo $B(v, R) \subset V$ palla aperta come l'insieme
+		$$
+		\{ w \in V: ||w-v|| < R \}
+		$$
+	\end{definition}
+	\begin{definition}[palla chiusa]
+		Sia $v \in V$ e $R > 0$, definiamo $\overline{B(v, R)}$ palla chiusa come l'insieme
+		$$
+		\{ w \in V: ||w-v|| \leq R \}
+		$$
+	\end{definition}
+	\begin{remark}
+		$B(v, R) \subset \overline{B(v, R)} = B(v, R) \cup S(v, R)$ dove $S(v, R) = \{ w \in V: ||w-v|| = R \}$.
+	\end{remark}
+	\begin{definition}[insieme aperto]
+		$A \subset V$ si dice aperto se $\forall v \in A \exists \varepsilon > 0: B(v, \varepsilon) \subset A$.
+	\end{definition}
+	\begin{prop}
+		Se $\{ A_i \}$ è una collezione di insieme aperti, allora
+		\begin{enumerate}[label=\protect\circled{\arabic*}]
+			\item $\bigcup\limits_{i=1}^{+\infty} A_i$ è aperto;
+			\item $\bigcap\limits_{i=1}^N A_i$ è aperto (\textbf{con} $N < + \infty$).
+		\end{enumerate}
+	\end{prop}
+	\begin{proof} \hspace{1cm} \\
+		\circled{1}: chiaramente se $x \in \bigcup\limits_{i=1}^{+\infty} \implies \exists j \in \mathbb{N}: x \in A_j$. Dall'apertura di $A_j$ sappiamo che $\exists \varepsilon > 0: B(x, \varepsilon) \subset A_j \implies B(x, \varepsilon) \subset \bigcup\limits_{i=1}^{+\infty} A_i$. $\circled{2}$: chiaramente se $x \in \bigcup\limits_{i=1}^N$ allora $\forall i \in \{ 1, \ldots, N \}, x \in A_i$, ma allora
+		dall'ipotesi di apertura avremo che $\forall i \in \{ 1, \ldots, N \}, \exists \varepsilon_i > 0: B(x, \varepsilon_i) \subset A_i$. Posto $r = \min\{ \varepsilon_1, \ldots, \varepsilon_N \} \implies \forall i \in \{1, \ldots, N \}, B(x, r) \subset B(x, \varepsilon_i) \subset A_i \implies B(x, r) \subset \bigcup\limits_{i=1}^N A_i$. \\
+		In entrambi i casi, la tesi segue dall'arbitrarietà di $x$. 
+	\end{proof}
+	\begin{remark}
+		L'intersezione infinita di insiemi non è detto che sia un aperto: basti pensare all'intersezione di $\bigcup\limits_{i=1}^{\infty} (-\frac{1}{i}, \frac{1}{i}) = \{ 0 \}$ e chiaramente $\{ 0 \}$ è un chiuso siccome complementare dell'aperto $(-\infty, 0) \cup (0, +\infty)$.
+	\end{remark}
+	\begin{definition}[insieme chiuso]
+		Sia $C \subset V$, diremo che $C$ è chiuso se $C^c = A$ è aperto.
+	\end{definition}
+	\begin{prop}
+		Un insieme chiuso contiene tutti i suoi punti di accumulazione
+	\end{prop}
+	\begin{proof}
+	Supponiamo per assurdo che $v$ sia un punto di accumulazione di $C$ e $v \not\in C$, allora sappiamo che $\forall \varepsilon > 0: \exists w \neq v: w \in C \text{ e } ||w - v||< \varepsilon$. Ma se $v \not\in C \implies v \in C^c = A$ aperto, dunque $\exists R > 0: B(v, R) \subset A$, ma allora fissando $\varepsilon = R$ abbiamo che $\emptyset \neq B(v, R) \cap C \subset C \cap C^c = \emptyset$, assurdo.
+	\end{proof}
 	\chapter{Seconda esercitazione}
-
-	Riprendiamo l'esercizio della scorsa volta.
+	Riprendiamo l'esercizio della scorsa volta. Abbiamo visto che la restrizione a $V_n$ dell'operatore $T$ permette di concludere che la sua matrice associata è
+	\begin{equation*}
+		\begin{bmatrix}
+			1 & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{3}} & \ldots & \frac{1}{\sqrt{n}} \\
+			0 & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{3}} & \ldots & \frac{1}{\sqrt{n}} \\
+			\vdots & 0			   & \frac{1}{\sqrt{3}} & \vdots & \vdots \\
+			0 & 0 & 0 & \ldots & \frac{1}{\sqrt{n}}
+		\end{bmatrix}
+	\end{equation*}
+	Si osserva dunque che ogni $T(V_n) \subset V_n$, siccome restringendoci al sottospazio $V_n$ generato dai vettori $\{ e_1, \ldots, e_n \}$ avremo che il vettore $T(v) \in V_n$ se $v \in V_n$. Adesso, utilizzando il fatto che se $\exists \lambda \in \mathbb{C} : Tv = \lambda v$ allora
+	$$
+		x_k = \lambda^{-1} (e_k, Tv) = \lambda^{-1} (e_k, \sum_{i=1}^n \frac{x_i}{\sqrt{i}} \sum_{l=1}^i e_l) = \lambda^{-1} (e_k, \sum_{i=k}^n \frac{x_i}{\sqrt{i}} \sum_{l=1}^i e_l) = \lambda^{-1} \sum_{i=k}^n \frac{x_i}{\sqrt{i}}
+	$$
+	che chiaramente ha soluzione solamente se $k=1$, per cui risulta che $\lambda = 1$ o $x_1 = 0$, mentre per $k \geq 2$ avremo che $x_k = 0$.
 	%\addcontentsline{toc}{chapter}{Bibliografia}
 	%\bibliographystyle{unsrt}
 	%\bibliography{bibliography.bib}
