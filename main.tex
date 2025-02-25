@@ -610,6 +610,7 @@
 		&\ln{\sum_k |x_k y_k|} \leq \ln{\sum_k |x_k| \, |y_k|} \leq \ln{\sum_k e^{\frac{1}{p} \ln{|x_k|^p} + \frac{1}{q} \ln{|y_k|^q}}} \leq \ln{\frac{1}{p} \sum_k  e^{\ln{|x_k|^p}} + \frac{1}{q} \sum_k e^{\ln{|y_k|^q}}} \implies \\
 		&\implies \sum_k |x_k y_k| \leq \left( \sum_k |x_k|^p \right)^{\frac{1}{p}} \left( \sum_k |y_k|^q \right)^q
 		\end{align*}
+		dove si è potuto la disugaglianza sulla convessità siccome $\ln(e^x) = x$ che è una funzione convessa: osservare che non è un fatto generale che la composizione di una funzione concava ed una convessa sia ancora convessa.
 	\end{proof}
 	\section{13/09/2024}
 	Sia $\{ e_k \}_{k=1}^N$ è base ortonormale ($\iff (e_p, e_q) = \delta_{pq}$), preso $N_n = \text{Span}(\{ e_k \}^N_{k=1})$ e preso $Te_k = \frac{1}{\sqrt{k}} \sum_{p=1}^k e_k$. Mostrare che $V_n$ è $T-$invariante ($\iff TV_n \subseteq V_n$).
@@ -867,7 +868,7 @@
 	\begin{definition}[punto di accumulazione]
 		Sia $A \subset V$, dove $(V, ||\cdot||)$ è uno spazio normato, e sia $\underline{v} \in A$, diremo che $\underline{v}$ è un punto di accumulazione di $A$ se
 		$$
-		\forall \varepsilon > 0, \exists v \neq \underline{v}: v \in A \text{ e } || v - \underline{v} || < \varepsilon.
+		\forall \varepsilon > 0, \exists v \neq \underline{v} \in A: || v - \underline{v} || < \varepsilon.
 		$$
 	\end{definition}
 	\begin{remark}
@@ -973,6 +974,47 @@
 	\begin{proof}
 	Supponiamo per assurdo che $v$ sia un punto di accumulazione di $C$ e $v \not\in C$, allora sappiamo che $\forall \varepsilon > 0: \exists w \neq v: w \in C \text{ e } ||w - v||< \varepsilon$. Ma se $v \not\in C \implies v \in C^c = A$ aperto, dunque $\exists R > 0: B(v, R) \subset A$, ma allora fissando $\varepsilon = R$ abbiamo che $\emptyset \neq B(v, R) \cap C \subset C \cap C^c = \emptyset$, assurdo.
 	\end{proof}
+	Un concetto su cui adesso vogliamo concentrarci è il concetto di equivalenza fra norme
+	\begin{definition}[norme equivalenti]
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale tale che, prese $||\cdot||_1, ||\cdot||_2 : V \to \mathbb{C}$, $(V, ||\cdot||_1)$ e $(V, ||\cdot||_2)$ sia uno spazio normato. Allora diremo che $||\cdot||_1$ e $||\cdot||_2$ sono equivalenti se
+		\begin{equation*}
+		\exists k, K \in \mathbb{R}_+ : k ||\cdot||_1 \leq ||\cdot||_2 \leq K ||\cdot||_1 \tag{$\ast$}
+		\end{equation*}
+	\end{definition}
+	\begin{remark}
+		Sebbene questa definizione possa sembrare, a prima vista, privilegiare la norma $||\cdot||_1$, osserviamo che la relazione $(\ast)$ di fatto implica che
+		\begin{align*}
+			\begin{cases}
+				||\cdot||_2 \leq K ||\cdot||_1 \\
+				k ||\cdot||_1 \leq ||\cdot||_2
+			\end{cases} \implies \frac{1}{K} ||\cdot||_2 \leq ||\cdot||_1 \leq \frac{1}{k} ||\cdot||_2
+		\end{align*}
+		e, quindi, concludere che questa unilateralità della definizione è solo apparente. 
+	\end{remark}
+	Si può mostrare che le norme nel caso finito-dimensionale sono tutte equivalenti, il che implica che inducono tutti la stessa topologia: infatti, la nozione di limite di un qualcosa che tende a $0$ definita
+	con una norma $||\cdot||_1$ sarà tendente a $0$ pure per la norma $||\cdot||_2$ siccome sarà possibile maggiorare la norma (e la tesi segue dal teorema del confronto). \\
+	E' bene tener presente che è possibile anche solo maggiorare la norma, ovvero, prese $||\cdot||_1$ e $||\cdot||_2$ norme, trovare quel $K \in \mathbb{R}_{+}$ tale che
+	$$
+		||\cdot||_1 \leq K ||\cdot||_2.
+	$$
+	Nel caso infinito-dimensionale sarà spesso possibile maggiorare la norma e questo ci permetterà di dimostrare che alcuni fatti mostrati con la norma $||\cdot||_2$ sono validi anche per la norma $||\cdot||_1$ ma non inducono propriamente la stessa topologia (poiché altrimenti sarebbero equivalenti). Naturalmente, il fatto
+	che due norme siano equivalenti \textbf{non} implica che non vi siano differenze fra l'usare una o l'altra: basti osservare anche solo graficamente come cambia il concetto di palla unitaria usando, rispettivamente, la norma euclidea, la norma del $||\cdot||_1 = \sum_i |z_i|$ e la norma infinito $\max_i |z_i|$.
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}
+			% assi cartesiani
+			\draw[->] (-3, 0) -- (3, 0);
+			\draw[->] (0, -3) -- (0, 3);
+			% palla euclidea
+			\node (origin) at (0, 0) {};
+			% palla della seconda distanza
+			\filldraw[-,  color=blue!60, fill=blue!5, semithick] (-2, 2) -- (2, 2) -- (2, -2) -- (-2, -2) -- (-2, 2) -- cycle; 
+			% palla della terza distanza
+			\filldraw[color=red!60, fill=red!5, semithick] (0,0) circle (2);
+			\filldraw[-, color=green!60, fill=green!5, semithick] (-2, 0) -- (0, 2) -- (2,0) -- (0, -2) -- (-2, 0) -- cycle;
+		\end{tikzpicture}
+		\caption{Palle unitarie con diverse distanze indotte da norme differenti. La regione rossa rappresenta la palla unitaria usando l'usuale distanza euclidea, la regione blu la palla dove si è utilizzata la distanza indotta dalla norma infinito mentre la regione verde la palla dove si è utilizzata la distanza indotta dalla norma del $\max$.}
+	\end{figure}
 	\chapter{Seconda esercitazione}
 	Riprendiamo l'esercizio della scorsa volta. Abbiamo visto che la restrizione a $V_n$ dell'operatore $T$ permette di concludere che la sua matrice associata è
 	\begin{equation*}
@@ -983,12 +1025,76 @@
 			0 & 0 & 0 & \ldots & \frac{1}{\sqrt{n}}
 		\end{bmatrix}
 	\end{equation*}
-	Si osserva dunque che ogni $T(V_n) \subset V_n$, siccome restringendoci al sottospazio $V_n$ generato dai vettori $\{ e_1, \ldots, e_n \}$ avremo che il vettore $T(v) \in V_n$ se $v \in V_n$. Adesso, utilizzando il fatto che se $\exists \lambda \in \mathbb{C} : Tv = \lambda v$ allora
+	La seconda richiesta dell'esercizio consiste nell'individuare come agisce l'aggiunto dell'operatore $T$ sul vettore $v$. Siccome $T$ è un operatore lineare, è sufficiente, naturalmente, vedere come questo agisce su una base dello spazio. Osserviamo che
 	$$
-		x_k = \lambda^{-1} (e_k, Tv) = \lambda^{-1} (e_k, \sum_{i=1}^n \frac{x_i}{\sqrt{i}} \sum_{l=1}^i e_l) = \lambda^{-1} (e_k, \sum_{i=k}^n \frac{x_i}{\sqrt{i}} \sum_{l=1}^i e_l) = \lambda^{-1} \sum_{i=k}^n \frac{x_i}{\sqrt{i}}
+		T^{\dag} e_p = \sum_{k=1}^{+\infty} (e_k, T^{\dag} e_p) e_k = \sum_{k=1}^{+\infty} (Te_k, e_p) e_k = \sum_{k=1}^{+\infty} \frac{1}{\sqrt{k}} e_k \chi_{\{k : k \geq p \}}(p) = \sum_{k=p}^{+\infty} \frac{1}{\sqrt{k}} e_k,
 	$$
-	che chiaramente ha soluzione solamente se $k=1$, per cui risulta che $\lambda = 1$ o $x_1 = 0$, mentre per $k \geq 2$ avremo che $x_k = 0$.
+	dove si è introdotta la funzione caratteristica $\chi$ definita come
+	$$
+	\chi_S(x) = \begin{cases}
+		1 & \text{se } x \in S \\
+		0 & \text{se } x \not\in S.
+	\end{cases}
+	$$
+	Osserviamo che negli spazi infinito-dimensionali non è detto che l'aggiunto sia ben definito per tutti i vettori, ovvero non è detto che l'aggiunto mi mandi dei vettori appartennti allo spazio di Hilbert $\mathcal{H}$ in vettori che appartengono sempre ad $\mathcal{H}$. \\
+	A questo punto, possiamo individuare anche i possibili autovalori e autovettori osservando che
+	$$
+		T \Phi_k = \lambda_k \Phi_k \implies \Phi_k = \lambda^{-1}_k T \Phi_k.
+	$$
+	E' banale trovare lo spettro del nostro operatore: infatti, usufruendo delle proprietà del prodotto scalare, si osserva che
+	\begin{align*}
+		&x_k = \lambda^{-1}_k (\sum_{i=1}^{+\infty} (e_i, Tx_k) ) = \lambda^{-1}_k (\sum_{i=1}^{+\infty} (e_i, \frac{1}{\sqrt{k}} \sum_{j=1}^k x_j e_j)) = \lambda^{-1}_k ( \sum_{i=1}^{+\infty} \sum_{j=1}^{k} \frac{x_j}{\sqrt{k}} (e_i,e_j)) = \\
+		&= \lambda^{-1}_k \sum_{i=1}^{+\infty} \sum_{j=1}^{k} \frac{x_j}{\sqrt{k}} \delta_{ij} = \sum_{i=1}^k \frac{x_i}{\sqrt{k}}
+	\end{align*}
+	ed è banale vedere che il vettore $(\underbrace{1, \ldots, 1}_{\text{k entrate}}, 0, \ldots)$ è autovettore relativo all'autovalore $\frac{1}{\sqrt{k}}$. 
+	\section{Esercizio proposto}
+	Posto $\Sigma(n) = \sum_{p=1}^n p = \frac{n(n+1)}{2}$ e preso l'operatore $T: \mathcal{H} \to \mathcal{H}$ tale che
+	$$
+		Te_n = \frac{1}{\sqrt{n}}
+	$$
 	%\addcontentsline{toc}{chapter}{Bibliografia}
 	%\bibliographystyle{unsrt}
 	%\bibliography{bibliography.bib}
+	\chapter{Sesta lezione}
+	Oggi ci concentremo sul concetto di insieme compatto e come possiamo usare tale definizione per mostrare che ogni funzione continua che mappa un compatto $C$ in $f(C) \subset \mathbb{R}$ assume massimo e minimo. Prima di procedere, è istruttivo soffermarsi su un esercizio
+	che ci consente di intuire che lo spazio $C([a, b])$ che avevamo introdotto la scorsa volta non è completo con la norma $||\cdot||_1$. \\
+	\begin{exercise}[lo spazio delle funzioni continue in un intervallo non è completo rispetto alla norma $||\cdot_1||$]
+	\end{exercise}
+		Consideriamo le funzioni $f: [-1, 1] \to \mathbb{C}$ continue e derivabili con derivata continua: ne deduciamo allora che essa siano limitate nell'intervallo $[-1, 1]$. Siano $||f||_1 = \max{|f(x)|}$ e $||f||_2 = \max{|f(x)|} + \max{|f'(x)|}$, allora abbiamo sicuramente che
+		$$
+		||f||_1 \leq ||f||_2 \, \forall f
+		$$
+		La norma $||f||_1$ viene quindi maggiorata da $||f||_2$ con $K = 1$, tuttavia non è possibile trovare un $k$ per cui $||f||_2 \leq K ||f||_1$. Inoltre, se prendiamo $g_n(x) = |x|^{1 + \frac{1}{n}}, g_n \in C^1([-1, 1]) \, \forall n \in \mathbb{N}$. Osserviamo che $g_n \to g(x) \to g(x) = |x|$ per $n \to +\infty$ nella norma $||\cdot||_1$. Infatti, limitandoci a $x > 0$, abbiamo che se poniamo $x = t^n, t \in [0, 1]$ allora $\max(t^{n}-t^{n+1})$ è in $t = \frac{n}{n+1}, 1-t = \frac{1}{n+1} \implies \max(t^n - t^{n+1}) \to 0.$ Ma $|x| \not\in C^1$ perché non derivabile per $x \neq 0$.
+	\begin{definition}[insieme compatto]
+		Sia $E$ un insieme, diremo che $E$ è compatto se per per ogni ricoprimento di insieme aperti esiste un sottoricoprimento di insieme aperti finito.
+	\end{definition}
+	\begin{prop}
+		Se $E$ è un insieme compatto infinito, allora contiene almeno un punto di accumulazione.
+	\end{prop}
+	\begin{proof}
+		Supponiamo per assurdo che $E$ non contenga alcun punto di accumulazione, allora sappiamo che $\forall v \in E, \exists r > 0: B(v, r) \subset E$ per cui solo $v \in B(v, r)$. Ma allora, posto $K = \{ B(v, r(v)) : v \in E \}$, allora possiamo
+		estrarre un sottoricoprimento finito di $K$ che copre $E$, ma è chiaro che una collezione finita di palle aperte contenenti un solo elemento non sia in grado di coprire interamente $E$, siccome tale sottoricoprimento conterebbe solamente un numero finito di elementi.
+	\end{proof}
+	\begin{cor}
+		Se $\{ x_k \} \subset E$ compatto, allora $\exists \{ x_{k_j} \} \to x \in E$.
+	\end{cor}
+	\begin{proof}
+		Procediamo per assurdo. Sia $E$ un insieme compatto e sia $\{ x_k \} \subset E$ una successione: se non abbiamo una successione estratta convergente allora vuol dire che $\forall y \in E, \exists r_y > 0, n_y > 0 : \forall k > n_y, x_k \not\in B(y, r_y)$ (se non esiste nessuna estratta convergente allora la successione deve uscire da ogni palla). 
+		Possiamo osservare che $X = \bigcup \{ B(y, r_y) : y \in E\}$ ma essendo $E$ compatto possiamo estrarre un sottoricoprimento finito: pertanto esistono $y_1, \ldots, y_m \in X : X = \bigcup\limits_{i=1}^m B(y_i, r_{y_i})$ ma allora, per quanto detto prima, sappiamo che $n$ sufficientemente grande (ovvero $n = \max{(n_{y_1}, \ldots, n_{y_m})}$) per cui $\forall i \in \{ 1, \ldots, m \}, x_k \not\in B(y_i, r_{y_i}) \implies x_k \not\in X$, il che è assurdo 
+	\end{proof}
+	Ora, siamo pronti ad enunciare il seguente risultato
+	\begin{theorem}[teorema di Weierstrass]
+		Sia $E$ un insieme compatto e sia $f: E \to \mathbb{R}$, allora $f$ assume massimo e minimo in $E$. Formalmente, diremo che $\exists x_{min}, x_{max} \in E : \forall x \in E, f(x) \geq f(x_\text{min})$ e $f(x) \leq f(x_\text{max})$. 
+	\end{theorem}
+	\begin{proof}
+		Per caratterizzazione del $\text{sup}$ e del $\text{inf}$ sappiamo che esistono due successioni $\{ a_k \}$ e $\{ b_k \} \subset f(E)$ tali che $a_k \to \text{sup}(f(E))$ e $b_k \to \text{inf}(f(E))$. Senza perdita di generalità facciamo la dimostrazione per il massimo di $f$: siccome $\forall k \in \mathbb{N}, a_k \in f(E) \implies \exists x_k \in E : f(x_k) = a_k$. Ora, per la proposizione precedente, siccome $\{ x_k \} \subset E$ segue che esiste una sottosuccessione convergente $x_{k_j} \to x^* \in E$, ma allora
+		$$
+			f(x^*) = \lim_{j \to +\infty} f(x_{k_j}) = \lim_{k \to +\infty} f(x_k) = \text{sup}(f(E))
+		$$
+		dove la seconda uguaglianza discende dal fatto che $x_k$ è una successione convergente, dunque ogni sua estratta convergerà allo stesso $x^* \in E$. 
+	\end{proof}
+
+	\chapter{Settima lezione}
+	
+	In questa lezione vogliamo concentrarci sull'introdurre alcuni spazi a dimensione infinita che ricoprono una certa rilevanza.
 \end{document}
