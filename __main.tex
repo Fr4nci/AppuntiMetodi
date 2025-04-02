@@ -1,0 +1,190 @@
+\RequirePackage{fix-cm}
+\documentclass[12pt, twoside, italian, openany]{book}
+\input{preamble/new_preamble}
+\usepackage{subcaption}
+\input{preamble/letterfonts}
+\input{preamble/macros}
+\usepackage{fancyhdr}
+\usepackage{titlesec}  % Opzionale, per controllo avanzato sui titoli
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{fancy}
+
+% Definizione dell'intestazione per pagine dispari (Odd)
+\fancyhead[LO]{\textbf{\thepage}}  % Numero di pagina in grassetto a sinistra
+\fancyhead[RO]{\nouppercase\rightmark}         % Capitolo e sezione a destra
+
+% Definizione dell'intestazione per pagine pari (Even)
+\fancyhead[LE]{\nouppercase\leftmark}          % Capitolo e sezione a sinistra
+\fancyhead[RE]{\textbf{\thepage}}  % Numero di pagina in grassetto a destra
+
+% Cancella il footer
+\fancyfoot{}
+\setlength{\headheight}{14.49998pt}
+\addtolength{\topmargin}{-2.49998pt}
+% Personalizzazione della linea orizzontale
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\pgfplotsset{compat=newest}
+\title{Appunti di Complementi di Analisi Matematica 2}
+\author{Francesco Sermi}
+\date{\today}
+\pgfplotsset{
+	compat = newest,
+	colormap/violet % se si vuole cambiare il colormap utilizzato per generare i grafici, tuttavia la copertina ha un colormap a
+					% parte che va modificato qua sotto. Se si stampa non a colori consiglio blackwhite come colormap
+	}
+\renewcommand{\appendixpage}{}
+\begin{document}
+	\begin{titlepage}
+	\centering
+	\vspace*{3cm}
+	{\huge\bfseries Cenni alla teoria degli insiemi \par}
+	\vspace{2cm}
+	{\Large\itshape Francesco Sermi\par}
+	\vfill
+	%\begin{figure}[H]
+	%	\centering
+	%	\includegraphics[scale=0.040]{immagini/burning_ship.png}
+	%\end{figure}
+    	%\begin{tikzpicture}
+	% Definisco lo stile dei vettori
+    	%\tikzset{vector/.style={-stealth, thick, color=black}}
+
+    % Parametri per il punto di contatto
+    	%\def\xo{1}
+    	%\def\yo{2}
+    	%\def\zo{5} % Calcola z0 = f(x0, y0)
+
+    % Derivate parziali della funzione f(x, y) = x^2 + y^2 nel punto (x0, y0)
+    	%\def\fx{2*\xo} % = 2
+    	%\def\fy{2*\yo} % = 4
+
+    % Disegno la superficie
+    	%\begin{axis}[
+    	%    width=12cm,
+    	%    view={60}{30}, % Angolazione impostata
+    	%    axis lines=middle,
+    	%    zlabel={$f(x,y)$},
+    	%    clip=false,
+    	%    domain=-5:5,
+    	%    y domain=-5:5,
+    	%    samples=30,
+    	%    colormap/viridis,
+    	%    z buffer=sort
+    	%]
+
+    % Grafico della superficie con colore visibile
+    	%\addplot3[surf, opacity=0.8, shader=interp]
+    	%    {x^2 - y^2}; % Superficie f(x, y) = x^2 + y^2
+    	%\end{axis}
+	%\end{tikzpicture}
+	\vfill	
+	{\large \hfill Pisa, \today \par}
+	\end{titlepage}
+    \chapter{Assiomi Zermelo-Fraenkel}
+    Come introdotto a lezione, il concetto di insieme è un ente primitivo, di cui non diamo una definizione. Tuttavia, nell'immensità possibili di insiemi dobbiamo imporre delle regole per definire quali sono dei "buoni" insiemi
+    per evitare dei comportamenti anomali come il paradosso di Russell. Queste regole sono dei veri e propri assiomi: affermazioni che si \emph{suppongono} vere e che non si dimostrano. Prima di procedere è necessario effettuare una grande premessa
+    che sarà alla base dell'introduzione alla teoria degli insiemi: la relazione $\in$ è la relazione che la teoria degli insiemi tenta di formalizzare, tuttavia essa è una relazione fra insiemi. Questo vuol dire che se $x \in A$ con $A$ insieme questa affermazione
+    ha senso solamente se $x$ è a sua volta un insieme stesso. Ma allora la scrittura $1 \in \mathbb{N}$ (che è vera) implica che gli oggetti "fondamentali" della matematica sono essi stessi degli insiemi, sebbene possa apparire controintuitivo data la natura "quotidiana" che attribuiamo ai numeri, tuttavia ciò deriva dal fatto che non abbiamo ancora
+    definito formalmente cosa sia un numero. La seconda osservazione necessaria è il fatto che la relazione di inclusione è una relazione derivata dalla $ \in$ definita come
+    $$
+        X \subseteq Y \iff Z \in X \implies Z \in Y.
+    $$
+    Procediamo adesso ad elencare gli assiomi ZF (abbreviazione per Zermelo-Frankel):
+    \begin{axiom}[dell'estensione]
+        Due insiemi $X, Y$ sono uguali se e solo se ogni elemento dell'insieme $X$ è elemento dell'insieme $Y$ e ogni elemento dell'insieme $Y$ è elemento dell'insieme $X$. Formalmente
+        $$
+        \forall X, Y, (X = Y) \iff (Z \in X \implies Z \in Y) \wedge (Z \in Y \implies Z \in X).
+        $$
+    \end{axiom}
+    \begin{exercise}
+        Dimostrare che questo assioma è equivalente a dire che $X = Y \iff (X \subseteq Y) \wedge (Y \subseteq X)$
+    \end{exercise}
+    \begin{axiom}[del'insieme vuoto]
+        Esiste un insieme privo di elementi. Formalmente
+        $$
+        \exists X : \forall Y, \neg (Y \in X).
+        $$
+    \end{axiom}
+    \begin{exercise}
+        Mostrare, usando l'assioma di estensionalità, che tale insieme è unico.
+    \end{exercise}
+    \begin{axiom}[della coppia]
+        Dati comunque due insiemi $X$ e $Y$ esistono un insieme $Z$ i cui elementi sono solo $X$ e $Y$. Formalmente
+        $$
+        \forall X, Y, \exists Z : \forall W, (W \in Z) \iff (W = X) \vee (W = Y).
+        $$
+    \end{axiom}
+    Tale assioma afferma che l'operazione di comporre $Z = \{ X, Y \}$ presi due insiemi $X, Y$ è lecito. In particolare se $X = Y$ è lecito comporre l'insieme \emph{singoletto} $\{ X \}$. E' anche lecito definire il concetto di coppia ordinata
+    $$
+    (X, Y) = \{ \{ \}, \{ X, Y\} \}.
+    $$
+    \begin{exercise}
+        Mostrare che $(X, Y) = (W, Z) \iff (X = W) \wedge (Y = Z)$. Conseguentemente mostrare che $(X, Y) \lnot (Y, X)$ (da qui il nome di coppia ordinata)
+    \end{exercise}
+    \begin{axiom}[dell'unione]
+        Per ogni insieme $X$ esiste un insieme $Y$ tale che l'insieme $Z$ è un elemento di $Y$ se e solo se $Z$ è elemento di un elemento $X$. Formalmente
+        $$
+        \forall X, \exists Y : \forall Z, (Z \in Y) \iff (\exists W \in X : Z \in W).
+        $$
+    \end{axiom}
+    L'insieme $Y$ si indica con
+    $$
+    Y = \bigcup_{W \in X} W.
+    $$
+    E' dunque lecito, data una famiglia di insiemi, costruire la loro unione.
+    \begin{axiom}[dell'insieme potenza]
+        Per ogni insieme $X$ esiste un insieme $Y$ i cui elementi sono tutti e soli i sottoinsiemi di $X$. Formalmente
+        $$
+        \forall X \exists Y: \forall Z, (Z \in Y) \iff (Z \subseteq X).
+        $$
+    \end{axiom}
+    E' dunqie lecito costruire ciò che viene usualmente chiamato \emph{insieme delle parti} di $X$ che si indica con $\mathcal{P}(X)$.
+    \begin{axiom}[dell'infinito]
+        Esiste un insieme $X$ tale che $\emptyset \in X$ e $\forall Y \in X \implies S(Y) = Y \cup \{ Y \} \in X$. Formalmente
+        $$
+        \exists X: (\emptyset \in X) \wedge (\forall Y, (Y \in X) \implies (Y \cup \{ Y \} \in X)).
+        $$
+    \end{axiom}
+    Come assioma, come vedremo, consente di costruire l'insieme dei numeri naturali.
+    \begin{axiom}[di separazione]
+        Dato un insieme $X$ e un predicato $P(A)$ avente come argomento un insieme $A$, esiste un sottoinsieme $Y$ di $X$ avente come elemeti tutti e soli gli elementi $Z \in X$ per cui $P(Z)$ è vera. Formalmente
+        $$
+        \forall X, \exists Y: (\forall Z, (Z \in Y)) \iff (Z \in X) \wedge P(Z).
+        $$
+    \end{axiom}
+    Questo assioma consente di definire sottoinsiemi di un insieme tramite una proprietà: $Y = \{ Z \in X: P(Z)\}$. Per esempio dati due insiemi $X, Y$,
+    $$
+    X \cap Y = \{ Z \in X: Z \in Y \}, X \setminus Y = \{ Z \in X: \lnot(Z \in Y) \}.
+    $$
+    \begin{axiom}[di buona fondazione]
+        Ogni insieme non vuoto $X$ contiene elementi $Y$ tali che $X \cap Y = \emptyset$. Formalmente
+        $$
+        \forall X, \lnot(X = \emptyset) \implies (\exists Y \in X: \lnot(\exists Z \in Y: Z \in X \cap Y)). 
+        $$
+    \end{axiom}
+    \begin{exercise}
+        Mostrare che l'assioma di buona fondazione evita la presenza di definizioni circolari, ovvero $\forall X, \lnot(X \in X)$. \emph{Suggerimento:} procedere per assurdo prendendo come insieme $\{ X \}$.
+    \end{exercise}
+    \begin{exercise}
+        Mostrare che l'assioma di buona fondazione evita la presenza di insiemi $Y, Z : Y \in Z \in Y$. \emph{Suggerimento:} procedere per assurdo prendendo come insieme $\{ Y, Z \}$.
+    \end{exercise}
+    \begin{remark}
+    Osservare che l'assioma di buona fondazione evita il cosiddetto \emph{paradosso di Russell}, ovvero che esista l'insieme di tutti gli insiemi siccome tale insieme sarebbe un elemento di sé stesso.
+    \end{remark}
+    \begin{axiom}[di rimpiazzamento]
+        Siano $X$ un insieme e sia $F(A, B)$ un predicato, avente come argomento una coppia ordinata di insiemi, tali che, per ogni $A \in X$, $F(A, B) \wedge F(A, B')$ implica che $B = B'$. Allora esiste un insieme $Y$ i cui elementi sono tutti e soli gli insiemi $B$ per cui esiste $A \in X$ tale che $F(A, B)$ sia vera. Formalmente
+        \begin{align*}
+        \forall A \in X, \forall B, B', &((F(A, B) \wedge F(A, B')) \implies (B=B')) \\
+        &\Updownarrow \\
+        (\exists Y : (B \in Y) &\iff (\exists A \in X: P(A, B))).
+        \end{align*}
+    \end{axiom}
+    La necessità di questo assioma (che appare oscuro a prima vista) dipende dal fatto che, per un predicato $F$ che soddisfa l'ipotesi qua sopra esposta, ma applicabile a qualunque coppia di insieme, non possiamo considerare $F$ come una funzione perché, senza imporre qualche restrizione sugli elementi, questa avrebbe come dominio e codominio "l'insieme di tutti gli insiemi", la cui esistenza è
+    negata dall0insieme di buona fondazione. Se ci restringiamo agli elementi di un insieme $X$, tuttavia le corrispondenti "immagini" $B$ formano un insieme $Y$ e, dunque, possiamo considerare $F$ come funzione da $X$ a $Y$. \\
+    \begin{remark}
+        Considereremo come "buoni" insiemi quelli che rispettano gli assiomi ZFC
+    \end{remark}
+\end{document}

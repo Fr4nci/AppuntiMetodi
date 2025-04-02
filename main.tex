@@ -1084,17 +1084,61 @@
 	\end{proof}
 	Ora, siamo pronti ad enunciare il seguente risultato
 	\begin{theorem}[teorema di Weierstrass]
-		Sia $E$ un insieme compatto e sia $f: E \to \mathbb{R}$, allora $f$ assume massimo e minimo in $E$. Formalmente, diremo che $\exists x_{min}, x_{max} \in E : \forall x \in E, f(x) \geq f(x_\text{min})$ e $f(x) \leq f(x_\text{max})$. 
+		Sia $E$ un insieme compatto e sia $f: E \to \mathbb{R}$ continua, allora $f$ assume massimo e minimo in $E$. Formalmente, diremo che $\exists x_\text{min}, x_\text{max} \in E : \forall x \in E, f(x) \geq f(x_\text{min})$ e $f(x) \leq f(x_\text{max})$. 
 	\end{theorem}
 	\begin{proof}
 		Per caratterizzazione del $\text{sup}$ e del $\text{inf}$ sappiamo che esistono due successioni $\{ a_k \}$ e $\{ b_k \} \subset f(E)$ tali che $a_k \to \text{sup}(f(E))$ e $b_k \to \text{inf}(f(E))$. Senza perdita di generalità facciamo la dimostrazione per il massimo di $f$: siccome $\forall k \in \mathbb{N}, a_k \in f(E) \implies \exists x_k \in E : f(x_k) = a_k$. Ora, per la proposizione precedente, siccome $\{ x_k \} \subset E$ segue che esiste una sottosuccessione convergente $x_{k_j} \to x^* \in E$, ma allora
 		$$
-			f(x^*) = \lim_{j \to +\infty} f(x_{k_j}) = \lim_{k \to +\infty} f(x_k) = \text{sup}(f(E))
+			\text{sup}(f(E)) = \lim_{k \to +\infty} f(x_k) = \lim_{j \to +\infty} f(x_{k_j}) = f(x^*)  
 		$$
-		dove la seconda uguaglianza discende dal fatto che $x_k$ è una successione convergente, dunque ogni sua estratta convergerà allo stesso $x^* \in E$. 
+		dove la seconda uguaglianza discende dal fatto che $f(x_k)$ è una successione convergente, dunque ogni sua estratta convergerà allo stesso valore. 
+	\end{proof}
+	Tramite il teorema di Weierstrass è possibile dimostrare un fatto che stiamo affermando dall'inizio del corso ma che non avevamo mai mostrato in maniera formale, ovvero il seguente
+	\begin{theorem}[le norme sono tutte equivalenti]
+		Sia $\mathbb{C}^n$ con $n \in \mathbb{N}$ e sia $||\cdot||_1$ una norma su $\mathbb{C}^n$ mentre con $||\cdot||_2$ denotiamo l'usuale norma euclidea, allora $||\cdot||_1$ e $||\cdot||_2$ sono equivalenti.
+	\end{theorem}
+	\begin{proof}
+		Sia $v \in \mathbb{C}^n$ e sia $\{ e_1, \ldots, e_n \}$ una base, allora abbiamo che $\exists x_1, \ldots, x_n \in \mathbb{C} : v = x_1 e_1 + \ldots + x_n e_n$
+		$$
+			||v||_1 = ||x_1 e_1 + \ldots + x_n e_n||_1 \leq \sum_{i=1}^{n} |x_i| \, ||e_i||_1 \leq \sqrt{\sum_{i=1}^n |x_i|^2} \, \sqrt{\sum_{i=1}^n ||e_i||_1^2} = B ||v||_2 
+		$$
+		dove abbiamo usato la disuguaglianza di Schwarz e abbiamo posto $B = \sqrt{\sum\limits_{i=1}^n ||e_i||^2}$. Abbiamo dunque maggiorato la norma $||\cdot||_1$ con quella euclidea, mostriamo adesso che è possibile minorarla: consideriamo la funzione $f: \mathbb{C}^n \to \mathbb{R}$ definita come
+		$$
+		f(v) = ||v||_1
+ 		$$
+		e osserviamo che
+		$$
+			|f(v) - f(w)| = | || v ||_1 - || w ||_1 | \leq || v - w ||_1
+		$$
+		e questo dimostra che è una funzione lipschtziana, dunque continua. In virtù di ciò, possiamo applicare il teorema di Weierstrass alla frontiera $S(0, 1)$ (ovvero il guscio sferico di raggio $1$ centrato nell'origine) in cui sappiamo che la funzione $f$ assume massimo e minimo. Se denotiamo con 
+		$v^* \in S(0, 1) \subset \mathbb{C}^n$ il punto di minimo $f_{|S(0,1)}$ abbiamo che
+		$$
+			|| v ||_1 = \bigg| \bigg| \frac{v}{||v||_2} ||v||_2 \bigg| \bigg|_1 \geq  ||v||_2 \bigg| \bigg| \frac{v}{||v||_2} \bigg| \bigg|_1 \geq  ||v||_2 ||v^*||_1.
+		$$
+		Ponendo $A = ||v^*||_1$, abbiamo che
+		$$
+		\forall v \in \mathbb{C}^n, A ||v||_2 \leq ||v||_1 \leq B||v||_2,
+		$$
+		ovvero la tesi.
+	\end{proof}
+	Abbiamo il banale corollario
+	\begin{cor}
+		Sia $V$ un $\mathbb{C}-$spazio vettoriale a dimensione finita, allora tutte le norme sono equivalenti
+	\end{cor}
+	\begin{proof}
+		E' sufficiente mostrare che presa una norma $||\cdot||$ su $V$ allora, fissando una base di $V$ e una su $\mathbb{C}^n$, l'isomorfismo tra $V$ e $\mathbb{C}^n$ induce una norma su $\mathbb{C}^n$ (questo è chiaro, siccome basta prendere ogni vettore $v \in \mathbb{C}^n$ e associarci
+		$||\varphi(v)||$) e sfruttare il fatto che l'isomorfismo sia surriettivo: se, in un primo momento, stavamo lavorando su $\mathbb{C}^n$ allora risulta assicurato dal teorema precedente che esistano $A$, $B$ tali che $A||v||_2 \leq ||v|| \leq B||v||_2$ allora ciò mi implica che $A ||\varphi(v)||_2 \leq ||\varphi(v)|| \leq B||\varphi(v)||_2$ ma
+		$\varphi(v) \in V$ ed essendo $\varphi$ suriettivo ciò vale per ogni elemento di $V$.
 	\end{proof}
 
 	\chapter{Settima lezione}
 	
-	In questa lezione vogliamo concentrarci sull'introdurre alcuni spazi a dimensione infinita che ricoprono una certa rilevanza.
+	In questa lezione vogliamo concentrarci sull'introdurre alcuni spazi a dimensione infinita che ricoprono una certa rilevanza. Il primo spazio che vogliamo introdurre è certamente lo spazio $l^2$, ovvero l'insieme
+	delle successioni quadrato-sommabili
+	\begin{definition}[spazio $l^2$]
+		\begin{equation*}
+		l^2 = \left\{ \{ x_n \}_{n \in \mathbb{N}} \subset \mathbb{C} : \sum_{k=1}^{+\infty} |z_i|^2 < +\infty  \right\}
+		\end{equation*}
+	\end{definition}
+	Sempre su tale spazio, possiamo munire tale spazio di una norma 
 \end{document}
